@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/search_top_bar"
+        layout="@layout/view_search" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_top_bar" />
+
+    <com.yoga.oneweather.widget.SideLetterBar
+        android:id="@+id/letter_side"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/search_top_bar" />
+
+    <TextView
+        android:id="@+id/letter_overlay"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/overlay_bg"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="34sp"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_result_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_top_bar"
+        android:background="@color/main_background"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

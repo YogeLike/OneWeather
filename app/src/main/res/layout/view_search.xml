@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary">
+    <ImageButton
+        android:id="@+id/action_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:src="@drawable/ic_arrow_back_white"
+        android:background="?selectableItemBackgroundBorderless" />
+    <EditText
+        android:id="@+id/searchTextView"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/action_back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:drawableLeft="@drawable/ic_search_white"
+        android:drawablePadding="4dp"
+        android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
+        android:maxLines="1"
+        android:hint="@string/hint_search_box"
+        android:textCursorDrawable="@null"
+        android:textColor="@color/white"
+        android:textColorHint="@color/secondly_text_white"
+        android:textSize="18sp"/>
+    <ImageButton
+        android:id="@+id/action_empty_btn"
+        style="@style/MSV_ImageButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_clear_white"
+        android:visibility="gone"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:backgroundTint="#10000000"
+        tools:targetApi="LOLLIPOP"/>
+
+</RelativeLayout>

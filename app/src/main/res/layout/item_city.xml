@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <TextView
+        android:id="@+id/item_city_letter"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:paddingLeft="15dp"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:background="@color/dark_background"
+        android:clickable="false"
+        android:textColor="@color/secondly_text_or_icon_black"/>
+    <TextView
+        android:id="@+id/item_city_name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingLeft="15dp"
+        android:background="?selectableItemBackground"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:textColor="@color/gray_deep"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/dividers_black"/>
+
+
+</LinearLayout>
