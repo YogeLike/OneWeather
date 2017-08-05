@@ -13,9 +13,10 @@
     <dimen name="common_dimen_tiny">4dp</dimen>
     <dimen name="common_dimen_small">6dp</dimen>
     <dimen name="common_dimen">10dp</dimen>
-    <dimen name="common_dimen_mid">12dp</dimen>
-    <dimen name="common_dimen_big">16dp</dimen>
-    <dimen name="common_dimen_huge">20dp</dimen>
+    <dimen name="common_dimen_mid">14dp</dimen>
+    <dimen name="common_dimen_big">18dp</dimen>
+    <dimen name="common_dimen_huge">25dp</dimen>
+    <dimen name="common_dimen_super_huge">45dp</dimen>
     <dimen name="float_button_margin">16dp</dimen>
 
     <dimen name="side_letter_bar_width">36dp</dimen>
@@ -29,11 +30,12 @@
     <dimen name="text_size_tiny">10sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_default">14sp</dimen>
-    <dimen name="text_size_medium">16sp</dimen>
-    <dimen name="text_size_appbar_title">20sp</dimen>
-    <dimen name="text_size_big_title">24sp</dimen>
+    <dimen name="text_size_medium">17sp</dimen>
+    <dimen name="text_size_title">20sp</dimen>
+    <dimen name="text_size_big_title">25sp</dimen>
     <dimen name="text_size_big">34sp</dimen>
     <dimen name="text_size_huge">45sp</dimen>
     <dimen name="text_size_widget">50sp</dimen>
     <dimen name="text_size_main_special">80sp</dimen>
+
 </resources>

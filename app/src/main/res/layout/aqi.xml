@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/aqi_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="@dimen/common_dimen_mid"
+        android:layout_marginLeft="@dimen/common_dimen_big"
+        android:layout_marginTop="@dimen/common_dimen_tiny"
+        android:text="空气质量"
+        android:textSize="@dimen/text_size_medium" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_dimen_huge"
+            android:layout_marginRight="@dimen/common_dimen_big">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="污染指数"
+                android:textSize="@dimen/text_size_default" />
+
+            <com.yoga.oneweather.widget.CircleProgress
+                android:id="@+id/aqi_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/common_dimen"
+                android:layout_marginLeft="@dimen/common_dimen"
+                android:layout_marginRight="@dimen/common_dimen"
+                android:layout_marginTop="@dimen/common_dimen_huge"
+
+                app:antiAlias="true"
+                app:arcWidth="@dimen/common_dimen_small"
+                app:bgArcColor="@color/gray"
+                app:bgArcWidth="@dimen/common_dimen_small"
+                app:hint="良"
+                app:hintSize="@dimen/text_size_small"
+
+                app:startAngle="135"
+                app:sweepAngle="270"
+                app:maxValue="500"
+                app:value="100"
+                app:valueSize="@dimen/text_size_big_title"
+                app:arcColors="@color/light_blue"
+                app:maxAndMinValueColor="@color/gray_deep"
+                app:maxAndMinValueSize = "@dimen/text_size_small"
+                app:maxAndMinXOffsetPercent ="0.73"
+                app:maxAndMinYOffsetPercent ="0.92"
+
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/aqi_pm25"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/aqi_pm10"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/aqi_no2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/aqi_so2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/aqi_o3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/aqi_co"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

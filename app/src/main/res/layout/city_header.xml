@@ -21,7 +21,7 @@
 
         <ImageView
             style="@style/CommonIconImageSmall"
-            android:src="@drawable/ic_location_dark"
+            android:src="@drawable/ic_location"
             tools:ignore="ContentDescription" />
 
         <TextView

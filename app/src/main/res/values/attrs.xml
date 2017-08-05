@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 圆形进度条 -->
+    <declare-styleable name="CircleProgressBar">
+        <!--是否开启抗锯齿-->
+        <attr name="antiAlias" format="boolean" />
+        <!--圆弧起始角度，3点钟方向为0，顺时针递增，小于0或大于360进行取余-->
+        <attr name="startAngle" format="float" />
+        <!--圆弧度数,扫过的度数-->
+        <attr name="sweepAngle" format="float" />
+        <!--设置动画时间-->
+        <attr name="animTime" format="integer" />
+        <!--绘制内容数值 （第二行）-->
+        <attr name="maxValue" format="integer" />
+        <attr name="value" format="float" />
+        <attr name="valueSize" format="dimension" />
+        <attr name="valueColor" format="color|reference" />
+        <!--数字，精度,默认为0-->
+        <attr name="precision" format="integer" />
+        <!--绘制内容的单位 (第三行)-->
+        <attr name="unit" format="string|reference" />
+        <attr name="unitSize" format="dimension" />
+        <attr name="unitColor" format="color|reference"/>
+        <!--绘制相应内容的提示语（第一行）-->
+        <attr name="hint" format="string|reference" />
+        <attr name="hintSize" format="dimension" />
+        <attr name="hintColor" format="color|reference" />
+        <!--文字偏移量，相对于圆半径-->
+        <attr name="textOffsetPercentInRadius" format="float" />
+
+        <!--圆弧颜色-->
+        <attr name="arcColors" format="color|reference" />
+        <attr name="arcWidth" format="dimension" />
+        <!--背景圆弧颜色-->
+        <attr name="bgArcColor" format="color|reference" />
+        <attr name="bgArcWidth" format="dimension" />
+
+        <attr name="maxAndMinValueColor" format="color|reference"/>
+        <attr name="maxAndMinValueSize" format="dimension" />
+        <attr name="maxAndMinXOffsetPercent" format="float" />
+        <attr name="maxAndMinYOffsetPercent" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="Windmill">
+        <attr name="windmillColors" format="color|reference"/>
+        <attr name="windLengthPerent" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="SunriseSunset">
+        <attr name="lineColor" format="color|reference"/>
+        <attr name="sunColor" format="color|reference" />
+        <attr name="timeTextSize" format="dimension" />
+        <attr name="timeTextColor" format="color|reference" />
+
+    </declare-styleable>
+
+
+</resources>

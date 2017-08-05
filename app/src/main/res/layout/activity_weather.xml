@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yoga.oneweather.weather.WeatherActivity">
+    >
+    <ImageView
+        android:id="@+id/bg_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0a000000"/>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/title"/>
+            <include layout="@layout/now"/>
+            <include layout="@layout/forecast"/>
+            <include layout="@layout/aqi" />
+            <include layout="@layout/comfort"/>
+            <include layout="@layout/wind"/>
+            <include layout="@layout/sunmove" />
+        </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+
+    </ScrollView>
+
+</FrameLayout>

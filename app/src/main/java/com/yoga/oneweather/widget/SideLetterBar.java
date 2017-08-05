@@ -36,6 +36,7 @@ public class SideLetterBar extends View {
         this.overlay = overlay;
     }
 
+    @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         canvas.drawColor(Color.TRANSPARENT);

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/now_centi_degree_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/common_dimen_super_huge"
+        android:paddingLeft="@dimen/common_dimen_huge"
+        android:textSize="@dimen/text_size_main_special"/>
+    <TextView
+        android:id="@+id/now_cond_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/text_size_title"
+        android:layout_marginTop="@dimen/common_dimen"
+        android:layout_marginBottom="@dimen/common_dimen_small"/>
+    <TextView
+        android:id="@+id/now_today_tmp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="@dimen/common_dimen_small"
+        android:layout_marginBottom="@dimen/common_dimen_small"/>
+    <TextView
+        android:id="@+id/now_air"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_marginBottom="@dimen/common_dimen_big" />
+    <TextView
+        android:id="@+id/update_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_dimen_huge"
+
+        android:layout_gravity="bottom|left"
+        android:textSize="@dimen/text_size_tiny"/>
+
+</LinearLayout>

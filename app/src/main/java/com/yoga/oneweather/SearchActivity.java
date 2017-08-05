@@ -29,7 +29,6 @@ import com.yoga.oneweather.city.ResultAdapter;
 import com.yoga.oneweather.city.SearchViewAdapter;
 import com.yoga.oneweather.model.db.CityDao;
 import com.yoga.oneweather.model.db.DBManager;
-import com.yoga.oneweather.weather.WeatherActivity;
 import com.yoga.oneweather.widget.SideLetterBar;
 
 import java.util.ArrayList;

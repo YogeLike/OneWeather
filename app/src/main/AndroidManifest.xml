@@ -47,7 +47,7 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".weather.WeatherActivity"
+        <activity android:name=".WeatherActivity"
             android:windowSoftInputMode="adjustPan">
 
         </activity>
