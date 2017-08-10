@@ -4,43 +4,58 @@
     android:layout_height="match_parent"
 
     >
+
     <ImageView
         android:id="@+id/bg_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#0a000000"/>
+        android:background="#0a000000" />
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        >
-    <include layout="@layout/title_toolbar"
-        />
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-        <LinearLayout
+        android:orientation="vertical">
+
+        <include layout="@layout/title_toolbar" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <include layout="@layout/now"/>
-            <include layout="@layout/forecast"/>
-            <include layout="@layout/aqi" />
-            <include layout="@layout/comfort"/>
-            <include layout="@layout/wind"/>
-            <include layout="@layout/sunmove" />
-        </LinearLayout>
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/now" />
+
+                    <include layout="@layout/forecast" />
+
+                    <include layout="@layout/aqi" />
+
+                    <include layout="@layout/comfort" />
+
+                    <include layout="@layout/wind" />
+
+                    <include layout="@layout/sunmove" />
+                </LinearLayout>
 
 
+            </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-    </ScrollView>
     </LinearLayout>
 </FrameLayout>

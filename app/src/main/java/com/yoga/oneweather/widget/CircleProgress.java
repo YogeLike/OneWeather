@@ -267,7 +267,7 @@ public class CircleProgress extends View{
         //由于文字的baseline,descent,ascent等属性只与textSize和typeface 有关，所以此时可以直接计算
         //若value，hint,unit 由同一个画笔绘制或者需要动态设置文字的大小，则需要在每次更新后再次绘制
         mValueOffset = mCenterPoint.y + getBaselineOffsetFromY(mValuePaint)/2;
-        mHintOffset = mCenterPoint.y - mRadius * mTextOffsetPercentInRadius + getBaselineOffsetFromY(mHintPaint);//字体高度的一半
+        mHintOffset = mCenterPoint.y - mRadius * mTextOffsetPercentInRadius;
         mUnitOffset = mCenterPoint.y + mRadius * mTextOffsetPercentInRadius + getBaselineOffsetFromY(mUnitPaint);
         mMaxXLocate = mCenterPoint.x + mRadius * mMaxAndMinXOffset;
         mMaxYLocate = mCenterPoint.y + mRadius * mMaxAndMinYOffset + getBaselineOffsetFromY(mMaxAndMinPaint);

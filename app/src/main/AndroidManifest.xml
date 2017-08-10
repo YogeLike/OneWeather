@@ -32,7 +32,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity"
+        <activity
+            android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="dc60aaa882c6854f93ac7e3d55516f58" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <activity
+            android:name=".WeatherActivity"
+            android:theme="@style/WeatherTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,17 +53,10 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="dc60aaa882c6854f93ac7e3d55516f58" />
-
-        <service android:name="com.amap.api.location.APSService" />
-
-        <activity android:name=".WeatherActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/WeatherTheme">
-
-        </activity>
+        <service
+            android:name=".service.AutoUpdateService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

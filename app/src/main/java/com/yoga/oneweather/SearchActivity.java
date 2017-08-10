@@ -161,7 +161,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onCityClick(String cityId) {
                 WeatherActivity.actionStart(SearchActivity.this, cityId);
-                //finish();
+                finish();
             }
         };
 

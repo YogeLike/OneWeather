@@ -11,6 +11,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.yoga.oneweather.model.entity.AQI;
 import com.yoga.oneweather.model.entity.Forecast;
 import com.yoga.oneweather.model.entity.Weather;
+import com.yoga.oneweather.service.AutoUpdateService;
 import com.yoga.oneweather.util.Constant;
 import com.yoga.oneweather.util.HttpUtil;
 import com.yoga.oneweather.util.PreferencesUtil;
@@ -58,6 +60,7 @@ public class WeatherActivity extends AppCompatActivity {
     private static final float BITMAP_SCALE = 0.3f;
     private static final float BLUR_RADIUS = 6.5f;
 
+    private SwipeRefreshLayout swipeRefresh;
     private Button choose_city;
     private TextView city_name;
     private Button settings;
@@ -97,6 +100,8 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         bg_image = (ImageView) findViewById(R.id.bg_image);
 
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
 
 
         choose_city = (Button) findViewById(R.id.choose_city);
@@ -164,9 +169,32 @@ public class WeatherActivity extends AppCompatActivity {
 
             }
         });
-        String cityId = getIntent().getStringExtra("CityId");
-        requestWeather(cityId);
 
+        String cityId = getIntent().getStringExtra("CityId");
+        String weatherString = PreferencesUtil.get("weather",null);
+        if(cityId != null){//由intent启动
+            swipeRefresh.setRefreshing(true);
+            requestWeather(cityId);
+
+        }else {//不由intent启动
+            if(weatherString == null){//没缓存(第一次启动)
+                Intent intent = new Intent(this,SearchActivity.class);
+                startActivity(intent);
+                finish();
+            }else {//有缓存
+                mWeather = WeatherHandleUtil.handleWeatherResponse(weatherString);
+                showWeatherInfo(mWeather);
+                cityId = mWeather.basic.id;
+            }
+        }
+
+        final String finalCityId = cityId;
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestWeather(finalCityId);
+            }
+        });
 
 
 
@@ -177,7 +205,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
-    private Bitmap blur(Bitmap bitmap) {
+    private Bitmap blur(Bitmap bitmap) {//对背景图进行高斯模糊
 
         bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*BITMAP_SCALE), (int) (bitmap.getHeight()*BITMAP_SCALE),true);
 
@@ -202,6 +230,7 @@ public class WeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this,"获取天气失败",Toast.LENGTH_SHORT).show();
+                        swipeRefresh.setRefreshing(false);
 
                     }
                 });}
@@ -209,16 +238,22 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 final String respon = response.body().string();
+                Log.d(TAG, "onResponse: "+respon);
                 mWeather = WeatherHandleUtil.handleWeatherResponse(respon);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (mWeather != null && "ok".equals(mWeather.status)) {
                             PreferencesUtil.put("weather", respon);
+                            Intent intent = new Intent(WeatherActivity.this, AutoUpdateService.class);
+                            startService(intent);
+
                             showWeatherInfo(mWeather);
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气失败,", Toast.LENGTH_SHORT).show();
+
                         }
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -226,6 +261,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     private void showWeatherInfo(Weather weather) {
+
         boolean flag = false;
         String uv_index = "";
         String sunriseTime = "";
@@ -242,8 +278,9 @@ public class WeatherActivity extends AppCompatActivity {
         now_degree.setText(now_tmp);
         now_condition.setText(weather.now.now_cond.cond_text);
         now_air.setText(nowAir);
-
+        forcastLayout.removeAllViews();//清空，不然会越来越多
         for(Forecast forecast : weather.forecastList){
+            Log.d(TAG, "showWeatherInfo: "+forecast.toString());
             if(flag == false){
                 uv_index = forecast.uv;
                 sunriseTime = forecast.astro.sunrise;
@@ -271,9 +308,9 @@ public class WeatherActivity extends AppCompatActivity {
         String pm10 = "PM10    "+city.pm10;
         String pm25 = "PM2.5   "+city.pm25;
         String co = "CO          "+city.co;
-        String no2 = "NO ₂       "+city.no2;
-        String o3 = "O ₃          "+city.o3;
-        String so2 = "SO ₂       "+city.so2;
+        String no2 = "NO₂        "+city.no2;
+        String o3 = "O₃           "+city.o3;
+        String so2 = "SO₂        "+city.so2;
         aqi_circle.setValue(Integer.parseInt(city.aqi));
         aqi_circle.setHint(city.qlty);
         aqi_pm10.setText(pm10);
