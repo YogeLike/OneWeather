@@ -25,7 +25,7 @@
 
     <color name="gray">#8c8c8c</color>
     <color name="gray_deep">#5c5c5c</color>
-    <color name="alpha_gray">#CC646464</color>
+    <color name="alpha_gray">#ac646464</color>
     <color name="theme_gray">#646464</color>
 
     <color name="green500">#259b24</color>
@@ -36,4 +36,5 @@
     <color name="purple500">#9c27b0</color>
     <color name="red900">#b71c1c</color>
     <color name="light_blue">#0aacf1</color>
+    <color name="blue">#4049c9</color>
 </resources>

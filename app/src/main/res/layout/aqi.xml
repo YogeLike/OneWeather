@@ -43,7 +43,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/common_dimen"
                 android:layout_marginLeft="@dimen/common_dimen"
-                android:layout_marginRight="@dimen/common_dimen"
+                android:layout_marginRight="@dimen/common_dimen_huge"
                 android:layout_marginTop="@dimen/common_dimen_huge"
 
                 app:antiAlias="true"
@@ -57,7 +57,8 @@
                 app:sweepAngle="270"
                 app:maxValue="500"
                 app:value="100"
-                app:valueSize="@dimen/text_size_big_title"
+                app:valueSize="@dimen/text_size_big"
+                app:valueColor="@color/gray_deep"
                 app:arcColors="@color/light_blue"
                 app:maxAndMinValueColor="@color/gray_deep"
                 app:maxAndMinValueSize = "@dimen/text_size_small"
@@ -70,7 +71,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/common_dimen"
+            android:layout_marginBottom="@dimen/common_dimen">
 
             <TextView
                 android:id="@+id/aqi_pm25"

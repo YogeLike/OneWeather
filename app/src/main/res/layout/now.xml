@@ -9,7 +9,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/common_dimen_super_huge"
         android:paddingLeft="@dimen/common_dimen_huge"
-        android:textSize="@dimen/text_size_main_special"/>
+        android:textSize="@dimen/text_size_main_special"
+        android:textColor="@color/alpha_gray"
+        />
     <TextView
         android:id="@+id/now_cond_text"
         android:layout_width="wrap_content"
@@ -17,21 +19,27 @@
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/text_size_title"
         android:layout_marginTop="@dimen/common_dimen"
-        android:layout_marginBottom="@dimen/common_dimen_small"/>
+        android:layout_marginBottom="@dimen/common_dimen_small"
+        android:textColor="@color/alpha_gray"
+        />
     <TextView
         android:id="@+id/now_today_tmp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="@dimen/common_dimen_small"
-        android:layout_marginBottom="@dimen/common_dimen_small"/>
+        android:layout_marginBottom="@dimen/common_dimen_small"
+        android:textColor="@color/alpha_gray"
+        />
     <TextView
         android:id="@+id/now_air"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/text_size_medium"
-        android:layout_marginBottom="@dimen/common_dimen_big" />
+        android:layout_marginBottom="@dimen/common_dimen_big"
+        android:textColor="@color/alpha_gray"
+        />
     <TextView
         android:id="@+id/update_time"
         android:layout_width="wrap_content"
@@ -39,6 +47,8 @@
         android:layout_marginLeft="@dimen/common_dimen_huge"
 
         android:layout_gravity="bottom|left"
-        android:textSize="@dimen/text_size_tiny"/>
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/alpha_gray"
+        />
 
 </LinearLayout>

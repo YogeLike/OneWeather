@@ -97,6 +97,8 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         bg_image = (ImageView) findViewById(R.id.bg_image);
 
+
+
         choose_city = (Button) findViewById(R.id.choose_city);
         settings = (Button) findViewById(R.id.settings);
         city_name = (TextView) findViewById(R.id.city_name);
@@ -124,6 +126,11 @@ public class WeatherActivity extends AppCompatActivity {
         wind_spd = (TextView) findViewById(R.id.wind_spd);
         sunriseSunset = (SunriseSunset) findViewById(R.id.sunmove);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+
+        if(Build.VERSION.SDK_INT >= 21){
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
 
         scrollView. getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 
@@ -159,6 +166,8 @@ public class WeatherActivity extends AppCompatActivity {
         });
         String cityId = getIntent().getStringExtra("CityId");
         requestWeather(cityId);
+
+
 
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.clouds);
@@ -276,7 +285,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         comf_circle.setValue(Integer.parseInt(weather.now.humidity));
         String feel_tmp = "体感温度"+"      "+weather.now.feel_tmp+"  ℃";
-        String uv_text = "紫外线指数"+"  "+uv_index+" "+weather.suggestion.uv.brf;
+        String uv_text = "紫外线指数"+"  "+uv_index+"  "+weather.suggestion.uv.brf;
         comf_feel_tmp.setText(feel_tmp);
         comf_uv.setText(uv_text);
 

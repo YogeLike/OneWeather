@@ -196,7 +196,7 @@ public class Windmill extends View {
         invalidate();
     }
     public void startAnimation(){
-        mAnimator.setDuration((long) (10000/(windSpeed*0.5)));//乘以小于1的系数降低影响
+        mAnimator.setDuration((long) (10000/(windSpeed*0.38)));//乘以小于1的系数降低影响
         mAnimator.start();
     }
 
