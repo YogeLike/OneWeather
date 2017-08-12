@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import com.yoga.oneweather.MyApplication;
 import com.yoga.oneweather.city.CityInfoData;
 import com.yoga.oneweather.model.entity.City;
+import com.yoga.oneweather.model.entity.Weather;
 import com.yoga.oneweather.util.FileUtil;
 import com.yoga.oneweather.util.PreferencesUtil;
 
@@ -45,7 +46,7 @@ public class DBManager {
         return dbManager;
     }
 
-    public void copyCitysToDB(){
+    public void copyCitysToDB(){//将所有城市保存到数据库
 
         boolean cityInited = PreferencesUtil.get(CITY_INITED,false);
 
@@ -125,6 +126,29 @@ public class DBManager {
         return getCities(keyword);
     }
 
+
+    public List<FollowedCityWeather> getCitiesWeather(){
+        return DataSupport.findAll(FollowedCityWeather.class);
+    }
+
+
+    public void saveOrUpdateCityWeather(Weather weather){
+        FollowedCityWeather cityWeather = new FollowedCityWeather();
+        cityWeather.setCityName(weather.basic.city);
+        cityWeather.setCondition(weather.now.now_cond.cond_text);
+        cityWeather.setMaxTmp(weather.forecastList.get(0).daily_tmp.max_tmp);
+        cityWeather.setMinTmp(weather.forecastList.get(0).daily_tmp.min_tmp);
+        cityWeather.setCondition_code(weather.now.now_cond.code);
+        cityWeather.setCityId(weather.basic.id);
+        cityWeather.saveOrUpdate("cityName = ?",cityWeather.getCityName());//保存或者更新
+    }
+
+    public void deleteFollowedCity(String cityName){
+        DataSupport.deleteAll(FollowedCityWeather.class,"cityName = ?",cityName);
+    }
+    public List<FollowedCityWeather> findAllFollowedCities(){
+        return DataSupport.findAll(FollowedCityWeather.class);
+    }
 
     /**
      * a-z 排序,比较器

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
 
+import com.yoga.oneweather.model.db.DBManager;
 import com.yoga.oneweather.model.entity.Weather;
 import com.yoga.oneweather.util.Constant;
 import com.yoga.oneweather.util.HttpUtil;
@@ -60,6 +61,7 @@ public class AutoUpdateService extends Service {
                     Weather newWeather = WeatherHandleUtil.handleWeatherResponse(newWeatherString);
                     if(newWeather != null && "ok".equals(newWeather.status)){
                         PreferencesUtil.put("weather",newWeatherString);
+                        DBManager.getInstance().saveOrUpdateCityWeather(newWeather);//更新或保存天气
                     }
 
 

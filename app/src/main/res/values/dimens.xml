@@ -15,7 +15,7 @@
     <dimen name="common_dimen">10dp</dimen>
     <dimen name="common_dimen_mid">14dp</dimen>
     <dimen name="common_dimen_big">18dp</dimen>
-    <dimen name="common_dimen_huge">27dp</dimen>
+    <dimen name="common_dimen_huge">25dp</dimen>
     <dimen name="common_dimen_super_huge">40dp</dimen>
     <dimen name="float_button_margin">16dp</dimen>
 

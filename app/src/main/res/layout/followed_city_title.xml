@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/followed_city_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/white"
+    android:orientation="horizontal"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="城市管理"
+        android:textSize="@dimen/text_size_title" />
+
+    <ImageButton
+        android:id="@+id/add_city"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_vertical|right"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_add_black"
+        android:background="@color/transparent"
+        android:layout_marginLeft="@dimen/common_dimen_big"
+        android:layout_marginRight="@dimen/common_dimen_big"/>
+
+    <ImageButton
+        android:id="@+id/edit_city"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_vertical|right"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_edit_black"
+        android:background="@color/transparent"
+        />
+
+    <ImageButton
+        android:id="@+id/save_city_change"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_vertical|right"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_check_black"
+        android:visibility="gone"
+        android:background="#0000"
+        />
+
+
+</android.support.v7.widget.Toolbar>

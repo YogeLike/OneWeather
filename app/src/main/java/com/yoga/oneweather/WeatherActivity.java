@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.yoga.oneweather.model.db.DBManager;
 import com.yoga.oneweather.model.entity.AQI;
 import com.yoga.oneweather.model.entity.Forecast;
 import com.yoga.oneweather.model.entity.Weather;
@@ -101,7 +102,7 @@ public class WeatherActivity extends AppCompatActivity {
         bg_image = (ImageView) findViewById(R.id.bg_image);
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setColorSchemeResources(R.color.light_blue);
 
 
         choose_city = (Button) findViewById(R.id.choose_city);
@@ -137,13 +138,21 @@ public class WeatherActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
 
+        choose_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WeatherActivity.this,FollowedActivity.class);
+                startActivity(intent);
+            }
+        });
+
         scrollView. getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 
             boolean[] flags = {false,false,false,false,false};
             View[] views = {aqi_circle,comf_circle,windmill_big,windmill_small,sunriseSunset};
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onScrollChanged() {
+            public void onScrollChanged() {//检测滑动，控制动画的播放
                // Rect scrollBounds = new Rect();
                // scrollView.getHitRect(scrollBounds);
                 //Log.d(TAG, "onScrollChanged: HitRect:"+scrollBounds.toString());
@@ -245,6 +254,8 @@ public class WeatherActivity extends AppCompatActivity {
                     public void run() {
                         if (mWeather != null && "ok".equals(mWeather.status)) {
                             PreferencesUtil.put("weather", respon);
+                            DBManager.getInstance().saveOrUpdateCityWeather(mWeather);//更新或保存天气
+
                             Intent intent = new Intent(WeatherActivity.this, AutoUpdateService.class);
                             startService(intent);
 
