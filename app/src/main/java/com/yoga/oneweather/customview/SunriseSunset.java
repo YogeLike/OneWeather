@@ -153,6 +153,7 @@ public class SunriseSunset extends View {
     private void drawText(Canvas canvas) {
         canvas.drawText(mSunriseTime,mCenterPoint.x - mRadius + timeTextSize,lineYLocate + timeTextSize + 15,mTimePaint);//y轴可能需要微调一下
         canvas.drawText(mSunsetTime,mCenterPoint.x + mRadius - timeTextSize,lineYLocate + timeTextSize + 15,mTimePaint);
+        mTimePaint.setTextSize(40);
         canvas.drawText("日出日落",mCenterPoint.x ,lineYLocate - timeTextSize ,mTimePaint);
     }
 

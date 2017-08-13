@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/common_dimen_huge"
         app:lineColor="@color/white"
         app:sunColor="@color/orange500"
-        app:timeTextSize="@dimen/text_size_default"
+        app:timeTextSize="@dimen/text_size_small"
         app:timeTextColor="@color/white"/>
 
 

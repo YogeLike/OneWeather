@@ -60,7 +60,19 @@ public class WeatherActivity extends AppCompatActivity {
     private Weather mWeather;
     private ImageView bg_image;
     private static final float BITMAP_SCALE = 0.3f;
-    private static final float BLUR_RADIUS = 6.5f;
+    private static final float BLUR_RADIUS = 4.0f;
+
+    private final int[][] code_array = {
+            {100},{101,102,103},{104},{200,201,202,203,204,205,206,207,208},
+            {209,210,211,212,213},{300,301,302,303,304,305,306,309},{307,308,310,311,312,313},
+            {400,401,402,403,404,405,406,407},{500,501,502},{503,504,507,508}
+    };
+
+    private final int[] image_id = {
+            R.drawable.sunny,R.drawable.clouds,R.drawable.overcast,
+            R.drawable.wind,R.drawable.storm,R.drawable.rain,R.drawable.rain2,
+            R.drawable.snow,R.drawable.foggy,R.drawable.sand
+    };
 
     private SwipeRefreshLayout swipeRefresh;
     private Button choose_city;
@@ -72,6 +84,8 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView now_condition;
     private TextView now_today_tmp;
     private LinearLayout forcastLayout;
+    private LinearLayout aqiLayout;
+    private View aqiDividers;
     private CircleProgress aqi_circle;
     private TextView aqi_pm25;
     private TextView aqi_pm10;
@@ -116,6 +130,8 @@ public class WeatherActivity extends AppCompatActivity {
         now_condition = (TextView)findViewById(R.id.now_cond_text);
         now_today_tmp = (TextView) findViewById(R.id.now_today_tmp);
         forcastLayout = (LinearLayout) findViewById(R.id.forecast_layout);
+        aqiLayout = (LinearLayout)findViewById(R.id.aqi_layout);//部分城市没有aqi,需要隐藏
+        aqiDividers = findViewById(R.id.aqi_dividers);
         aqi_circle = (CircleProgress) findViewById(R.id.aqi_circle);
         aqi_pm25 = (TextView) findViewById(R.id.aqi_pm25);
         aqi_so2 = (TextView) findViewById(R.id.aqi_so2);
@@ -187,6 +203,7 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
+
         String cityId = getIntent().getStringExtra("CityId");
         String weatherString = PreferencesUtil.get("weather",null);
         if(cityId != null){//由intent启动
@@ -215,27 +232,11 @@ public class WeatherActivity extends AppCompatActivity {
 
 
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.clouds);
-        bitmap = blur(bitmap);
-        bg_image.setImageBitmap(bitmap);
 
 
     }
 
-    private Bitmap blur(Bitmap bitmap) {//对背景图进行高斯模糊
 
-        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*BITMAP_SCALE), (int) (bitmap.getHeight()*BITMAP_SCALE),true);
-
-        RenderScript rs = RenderScript.create(this);
-        Allocation allocation = Allocation.createFromBitmap(rs,bitmap);
-        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs,allocation.getElement());
-        blur.setInput(allocation);
-        blur.setRadius(BLUR_RADIUS);
-        blur.forEach(allocation);
-        allocation.copyTo(bitmap);
-        rs.destroy();
-        return bitmap;
-    }
 
     private void requestWeather(String cityId) {
         //https://free-api.heweather.com/v5/weather?city= &key=1c8bebce635648809e98babb820856c9
@@ -287,17 +288,22 @@ public class WeatherActivity extends AppCompatActivity {
         String sunriseTime = "";
         String sunsetTime = "";
         String nowTodayTemp = "";
-        city_name.setText(weather.basic.city);
+
+        int now_cond_code = Integer.parseInt(weather.now.now_cond.code);
+        int imageId = getBgImageId(now_cond_code);//获得背景id
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),imageId);
+        bitmap = blur(bitmap);//高斯模糊
+        bg_image.setImageBitmap(bitmap);
 
         String updateTime = weather.basic.update.updateTime.split(" ")[1] + "发布";
-        String nowAir = "空气  "+weather.aqi.city.qlty;
-        String now_cond_code = weather.now.now_cond.code;
+
         String now_tmp = weather.now.tmp+"°";
 
+        city_name.setText(weather.basic.city);
         update_time.setText(updateTime);
         now_degree.setText(now_tmp);
         now_condition.setText(weather.now.now_cond.cond_text);
-        now_air.setText(nowAir);
+
         forcastLayout.removeAllViews();//清空，不然会越来越多
         for(Forecast forecast : weather.forecastList){
             Log.d(TAG, "showWeatherInfo: "+forecast.toString());
@@ -324,21 +330,35 @@ public class WeatherActivity extends AppCompatActivity {
             forcastLayout.addView(view);
         }
 
-        AQI.AQICity city = weather.aqi.city;
-        String pm10 = "PM10    "+city.pm10;
-        String pm25 = "PM2.5   "+city.pm25;
-        String co = "CO          "+city.co;
-        String no2 = "NO₂        "+city.no2;
-        String o3 = "O₃           "+city.o3;
-        String so2 = "SO₂        "+city.so2;
-        aqi_circle.setValue(Integer.parseInt(city.aqi));
-        aqi_circle.setHint(city.qlty);
-        aqi_pm10.setText(pm10);
-        aqi_pm25.setText(pm25);
-        aqi_co.setText(co);
-        aqi_no2.setText(no2);
-        aqi_o3.setText(o3);
-        aqi_so2.setText(so2);
+        if(weather.aqi != null) {//因为和风天气的接口的部分偏远城市没有aqi数据
+            AQI.AQICity city = weather.aqi.city;
+            String nowAir = "空气  " + city.qlty;
+            now_air.setText(nowAir);
+            String pm10 = "PM10    " + city.pm10;
+            String pm25 = "PM2.5   " + city.pm25;
+            String co = "CO          " + city.co;
+            String no2 = "NO₂        " + city.no2;
+            String o3 = "O₃           " + city.o3;
+            String so2 = "SO₂        " + city.so2;
+            aqi_circle.setValue(Integer.parseInt(city.aqi));
+            aqi_circle.setHint(city.qlty);
+            aqi_pm10.setText(pm10);
+            aqi_pm25.setText(pm25);
+            aqi_co.setText(co);
+            aqi_no2.setText(no2);
+            aqi_o3.setText(o3);
+            aqi_so2.setText(so2);
+            if(city.co == null){//不太发达的没有提供这几个数据
+                aqi_co.setVisibility(View.INVISIBLE);
+                aqi_no2.setVisibility(View.INVISIBLE);
+                aqi_o3.setVisibility(View.INVISIBLE);
+                aqi_so2.setVisibility(View.INVISIBLE);
+            }
+        }else {
+            aqiLayout.setVisibility(View.GONE);
+            now_air.setVisibility(View.GONE);
+            aqiDividers.setVisibility(View.GONE);
+        }
 
         comf_circle.setValue(Integer.parseInt(weather.now.humidity));
         String feel_tmp = "体感温度"+"      "+weather.now.feel_tmp+"  ℃";
@@ -361,6 +381,34 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d(TAG, "showWeatherInfo: "+sunriseTime + "  "+ sunsetTime+"  "+ nowTime);
         sunriseSunset.setTime(sunriseTime,sunsetTime,nowTime);
 
+    }
+
+    private int getBgImageId(int now_cond_code) {
+        for(int i = 0 ; i<code_array.length;i++){
+            if(code_array[i].length>0){
+                for(int j = 0 ; j<code_array[i].length;j++){
+                    if(code_array[i][j]==now_cond_code){
+                        return image_id[i];
+                    }
+                }
+            }
+        }
+        return image_id[0];
+    }
+
+    private Bitmap blur(Bitmap bitmap) {//对背景图进行高斯模糊
+
+        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*BITMAP_SCALE), (int) (bitmap.getHeight()*BITMAP_SCALE),true);
+
+        RenderScript rs = RenderScript.create(this);
+        Allocation allocation = Allocation.createFromBitmap(rs,bitmap);
+        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs,allocation.getElement());
+        blur.setInput(allocation);
+        blur.setRadius(BLUR_RADIUS);
+        blur.forEach(allocation);
+        allocation.copyTo(bitmap);
+        rs.destroy();
+        return bitmap;
     }
 
 }

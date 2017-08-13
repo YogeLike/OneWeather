@@ -14,7 +14,8 @@
         android:layout_marginLeft="@dimen/common_dimen_big"
         android:layout_marginTop="@dimen/common_dimen_tiny"
         android:text="舒适度"
-        android:textSize="@dimen/text_size_medium" />
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="空气湿度"
-                android:textSize="@dimen/text_size_default" />
+                android:textSize="@dimen/text_size_default"
+                android:textColor="@color/white"/>
 
             <com.yoga.oneweather.customview.CircleProgress
                 android:id="@+id/comf_circle"
@@ -52,11 +54,11 @@
                 app:sweepAngle="270"
                 app:value="70"
                 app:valueSize="@dimen/text_size_big"
-                app:valueColor="@color/gray_deep"
+                app:valueColor="@color/white"
                 app:maxValue="100"
                 app:arcColors="@color/light_blue"
                 app:textOffsetPercentInRadius="0"
-                app:maxAndMinValueColor="@color/gray_deep"
+                app:maxAndMinValueColor="@color/secondly_text_white"
                 app:maxAndMinValueSize = "@dimen/text_size_small"
 
 
@@ -74,12 +76,14 @@
                 android:layout_weight="1"
                 android:gravity="bottom"
                 android:layout_marginBottom="@dimen/common_dimen"
+                android:textColor="@color/main_text_white"
                 />
             <TextView
                 android:id="@+id/comf_uv_index"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:textColor="@color/main_text_white"
                 />
 
         </LinearLayout>

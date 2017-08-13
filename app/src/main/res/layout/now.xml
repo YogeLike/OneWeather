@@ -10,7 +10,7 @@
         android:layout_marginTop="@dimen/common_dimen_super_huge"
         android:paddingLeft="@dimen/common_dimen_huge"
         android:textSize="@dimen/text_size_main_special"
-        android:textColor="@color/alpha_gray"
+        android:textColor="@color/main_text_white"
         />
     <TextView
         android:id="@+id/now_cond_text"
@@ -20,7 +20,7 @@
         android:textSize="@dimen/text_size_title"
         android:layout_marginTop="@dimen/common_dimen"
         android:layout_marginBottom="@dimen/common_dimen_small"
-        android:textColor="@color/alpha_gray"
+        android:textColor="@color/secondly_text_white"
         />
     <TextView
         android:id="@+id/now_today_tmp"
@@ -29,7 +29,8 @@
         android:layout_gravity="center_horizontal"
         android:paddingLeft="@dimen/common_dimen_small"
         android:layout_marginBottom="@dimen/common_dimen_small"
-        android:textColor="@color/alpha_gray"
+        android:textSize="@dimen/text_size_default"
+        android:textColor="@color/secondly_text_white"
         />
     <TextView
         android:id="@+id/now_air"
@@ -38,7 +39,7 @@
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/text_size_medium"
         android:layout_marginBottom="@dimen/common_dimen_big"
-        android:textColor="@color/alpha_gray"
+        android:textColor="@color/secondly_text_white"
         />
     <TextView
         android:id="@+id/update_time"
@@ -48,7 +49,7 @@
 
         android:layout_gravity="bottom|left"
         android:textSize="@dimen/text_size_small"
-        android:textColor="@color/alpha_gray"
+        android:textColor="@color/secondly_text_white"
         />
 
 </LinearLayout>

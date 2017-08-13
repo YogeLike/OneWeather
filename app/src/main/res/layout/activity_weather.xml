@@ -45,17 +45,18 @@
 
 
                     <include layout="@layout/forecast" />
-                    <include layout="@layout/dividers"/>
 
+                    <include layout="@layout/dividers"
+                        android:id="@+id/aqi_dividers"/>
                     <include layout="@layout/aqi" />
-                    <include layout="@layout/dividers"/>
 
+                    <include layout="@layout/dividers"/>
                     <include layout="@layout/comfort" />
-                    <include layout="@layout/dividers"/>
 
+                    <include layout="@layout/dividers"/>
                     <include layout="@layout/wind" />
-                    <include layout="@layout/dividers"/>
 
+                    <include layout="@layout/dividers"/>
                     <include layout="@layout/sunmove" />
                 </LinearLayout>
 

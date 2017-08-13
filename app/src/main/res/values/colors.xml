@@ -18,8 +18,8 @@
 
     <color name="dividers_white">#5affffff</color>
     <color name="disable_or_hint_white">#4Cffffff</color>
-    <color name="secondly_text_white">#ABffffff</color>
-    <color name="main_text_white">#fff</color>
+    <color name="secondly_text_white">#E0ffffff</color>
+    <color name="main_text_white">#ffffffff</color>
 
     <color name="share_color">#33475f</color>
 
@@ -36,6 +36,6 @@
     <color name="purple500">#9c27b0</color>
     <color name="red900">#b71c1c</color>
     <color name="light_blue">#0aacf1</color>
-    <color name="blue">#4049c9</color>
+    <color name="blue">#F04049c9</color>
 
 </resources>

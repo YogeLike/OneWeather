@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:text="风"
         android:textSize="@dimen/text_size_medium"
-        android:layout_marginLeft="@dimen/common_dimen_big"/>
+        android:layout_marginLeft="@dimen/common_dimen_big"
+        android:textColor="@color/white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,21 +56,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="bottom" />
+                android:gravity="bottom"
+                android:textColor="@color/main_text_white"/>
 
             <TextView
                 android:id="@+id/wind_sc"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:textColor="@color/main_text_white"/>
 
             <TextView
                 android:id="@+id/wind_spd"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="top"/>
+                android:gravity="top"
+                android:textColor="@color/main_text_white"/>
         </LinearLayout>
     </LinearLayout>
 
