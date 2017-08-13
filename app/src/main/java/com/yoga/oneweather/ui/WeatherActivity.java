@@ -1,4 +1,4 @@
-package com.yoga.oneweather;
+package com.yoga.oneweather.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.yoga.oneweather.R;
 import com.yoga.oneweather.model.db.DBManager;
 import com.yoga.oneweather.model.entity.AQI;
 import com.yoga.oneweather.model.entity.Forecast;
@@ -35,9 +36,9 @@ import com.yoga.oneweather.util.HttpUtil;
 import com.yoga.oneweather.util.PreferencesUtil;
 import com.yoga.oneweather.util.VisibilityCheckUtil;
 import com.yoga.oneweather.util.WeatherHandleUtil;
-import com.yoga.oneweather.widget.CircleProgress;
-import com.yoga.oneweather.widget.SunriseSunset;
-import com.yoga.oneweather.widget.Windmill;
+import com.yoga.oneweather.customview.CircleProgress;
+import com.yoga.oneweather.customview.SunriseSunset;
+import com.yoga.oneweather.customview.Windmill;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -142,6 +143,13 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WeatherActivity.this,FollowedActivity.class);
+                startActivity(intent);
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WeatherActivity.this,SettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -255,9 +263,10 @@ public class WeatherActivity extends AppCompatActivity {
                         if (mWeather != null && "ok".equals(mWeather.status)) {
                             PreferencesUtil.put("weather", respon);
                             DBManager.getInstance().saveOrUpdateCityWeather(mWeather);//更新或保存天气
-
-                            Intent intent = new Intent(WeatherActivity.this, AutoUpdateService.class);
-                            startService(intent);
+                            if(PreferencesUtil.get("auto_update_weather",true)){//检查设置
+                                Intent intent = new Intent(WeatherActivity.this, AutoUpdateService.class);
+                                startService(intent);
+                            }
 
                             showWeatherInfo(mWeather);
                         } else {

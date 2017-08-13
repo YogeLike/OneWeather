@@ -1,4 +1,4 @@
-package com.yoga.oneweather;
+package com.yoga.oneweather.ui;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -23,13 +23,14 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.yoga.oneweather.R;
 import com.yoga.oneweather.city.CityInfoData;
 import com.yoga.oneweather.city.OnCityClickListener;
 import com.yoga.oneweather.city.ResultAdapter;
 import com.yoga.oneweather.city.SearchViewAdapter;
 import com.yoga.oneweather.model.db.CityDao;
 import com.yoga.oneweather.model.db.DBManager;
-import com.yoga.oneweather.widget.SideLetterBar;
+import com.yoga.oneweather.customview.SideLetterBar;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:layout_marginLeft="@dimen/common_dimen_big"
+        android:layout_marginRight="@dimen/common_dimen_big"
+        android:layout_marginTop="@dimen/common_dimen"
+        android:layout_marginBottom="@dimen/common_dimen"
+        android:background="@color/dividers_white"
+        />
+
+</LinearLayout>

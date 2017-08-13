@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="WeatherTheme" parent="AppTheme"/>
+    <style name="SettingTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimaryDark">#11000000</item>
+    </style>
     <style name="LetterIndexTextViewStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

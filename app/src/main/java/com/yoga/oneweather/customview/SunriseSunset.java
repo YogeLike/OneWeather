@@ -1,4 +1,4 @@
-package com.yoga.oneweather.widget;
+package com.yoga.oneweather.customview;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;

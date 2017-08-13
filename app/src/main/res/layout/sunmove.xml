@@ -5,17 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="@dimen/common_dimen_big">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:layout_marginLeft="@dimen/common_dimen"
-        android:layout_marginRight="@dimen/common_dimen"
-        android:layout_marginBottom="@dimen/common_dimen"
-        android:background="@color/white"
-        />
 
 
-    <com.yoga.oneweather.widget.SunriseSunset
+
+    <com.yoga.oneweather.customview.SunriseSunset
         android:id="@+id/sunmove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

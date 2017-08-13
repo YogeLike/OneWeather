@@ -34,8 +34,11 @@ public class AutoUpdateService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         updateWeather();
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int anHour = 8 * 60 * 60 * 1000 ;//8小时
-        long triggerAtTime = SystemClock.elapsedRealtime() + anHour ;
+        String hour = PreferencesUtil.get("auto_update_rate","6");
+        int h = Integer.parseInt(hour);
+        int updateRate = h * 60 * 60 * 1000 ;
+        long triggerAtTime = SystemClock.elapsedRealtime() + updateRate ;
+
         Intent i = new Intent(this,AutoUpdateService.class);
         PendingIntent pi = PendingIntent.getService(this,0,i,0);
         manager.cancel(pi);//取消之前的
@@ -44,7 +47,7 @@ public class AutoUpdateService extends Service {
     }
 
     private void updateWeather() {
-        String weatherString = PreferencesUtil.get("weather","null");
+        String weatherString = PreferencesUtil.get("weather",null);
         if(weatherString != null){
             Weather weather = WeatherHandleUtil.handleWeatherResponse(weatherString);
             String cityId = weather.basic.id;

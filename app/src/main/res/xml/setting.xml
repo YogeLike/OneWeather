@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="天气更新">
+        <SwitchPreference
+            android:key="auto_update_weather"
+            android:summaryOff="禁用"
+            android:summaryOn="启用"
+            android:title="自动更新"
+            />
+        <ListPreference
+            android:key="auto_update_rate"
+            android:dependency="auto_update_weather"
+            android:entries="@array/update_rate"
+            android:entryValues="@array/update_rate_value"
+            android:summary="6小时"
+            android:title="自动更新时间"
+            android:dialogTitle="更新时间"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="软件相关">
+        <Preference
+            android:key="app_about"
+            android:title="关于"
+
+            />
+
+        <Preference
+            android:selectable="false"
+            android:summary="1.0"
+            android:title="版本号" />
+
+
+    </PreferenceCategory>
+</PreferenceScreen>

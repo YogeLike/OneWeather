@@ -9,5 +9,19 @@
     <string name="locating">正在定位…</string>
     <string name="located_failed">定位失败</string>
     <string name="add_city_hand_mode">定位失败,请手动添加城市</string>
+    <string-array name="update_rate">
+        <item>3小时</item>
+        <item>6小时</item>
+        <item>12小时</item>
+        <item>24小时</item>
+    </string-array>
+    <string-array name="update_rate_value">
+        <item>3</item>
+        <item>6</item>
+        <item>12</item>
+        <item>24</item>
+    </string-array>
+
+
 
 </resources>

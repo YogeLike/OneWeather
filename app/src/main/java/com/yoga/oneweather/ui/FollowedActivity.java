@@ -1,4 +1,4 @@
-package com.yoga.oneweather;
+package com.yoga.oneweather.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.yoga.oneweather.R;
 import com.yoga.oneweather.city.FollowedCityAdapter;
 import com.yoga.oneweather.city.OnCityClickListener;
 import com.yoga.oneweather.model.db.DBManager;
@@ -94,7 +95,6 @@ public class FollowedActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(FollowedActivity.this,SearchActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 

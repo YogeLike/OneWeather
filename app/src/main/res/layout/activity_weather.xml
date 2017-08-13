@@ -42,13 +42,19 @@
 
                     <include layout="@layout/now" />
 
+
+
                     <include layout="@layout/forecast" />
+                    <include layout="@layout/dividers"/>
 
                     <include layout="@layout/aqi" />
+                    <include layout="@layout/dividers"/>
 
                     <include layout="@layout/comfort" />
+                    <include layout="@layout/dividers"/>
 
                     <include layout="@layout/wind" />
+                    <include layout="@layout/dividers"/>
 
                     <include layout="@layout/sunmove" />
                 </LinearLayout>

@@ -29,6 +29,13 @@ public class PreferencesUtil {
     public static Boolean get(String key,boolean defValue){
         return getPreferences().getBoolean(key,defValue);
     }
+    public static void put(String key,int value){
+        getPreferences().edit().putInt(key,value).apply();
+
+    }
+    public static int get(String key,int defValue){
+        return getPreferences().getInt(key,defValue);
+    }
 
 
 

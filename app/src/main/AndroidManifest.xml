@@ -33,7 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SearchActivity"
+            android:name=".ui.SearchActivity"
             android:windowSoftInputMode="adjustPan" />
 
         <meta-data
@@ -43,7 +43,7 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
-            android:name=".WeatherActivity"
+            android:name=".ui.WeatherActivity"
             android:theme="@style/WeatherTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -58,8 +58,10 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".FollowedActivity"
-            ></activity>
+        <activity android:name=".ui.FollowedActivity"/>
+        <activity android:name=".ui.SettingActivity"
+            android:theme="@style/SettingTheme"
+            />
     </application>
 
 </manifest>

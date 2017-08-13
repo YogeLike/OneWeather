@@ -3,4 +3,10 @@
     <style name="WeatherTheme" parent="AppTheme">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="SettingTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimaryDark">#11000000</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
 </resources>

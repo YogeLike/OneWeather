@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/search_top_bar" />
 
-    <com.yoga.oneweather.widget.SideLetterBar
+    <com.yoga.oneweather.customview.SideLetterBar
         android:id="@+id/letter_side"
         android:layout_width="36dp"
         android:layout_height="match_parent"

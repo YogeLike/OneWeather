@@ -34,7 +34,7 @@
                 android:text="污染指数"
                 android:textSize="@dimen/text_size_default" />
 
-            <com.yoga.oneweather.widget.CircleProgress
+            <com.yoga.oneweather.customview.CircleProgress
                 android:id="@+id/aqi_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
