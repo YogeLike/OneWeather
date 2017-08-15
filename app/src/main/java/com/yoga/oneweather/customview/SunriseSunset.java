@@ -15,11 +15,11 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.yoga.oneweather.R;
+import com.yoga.oneweather.util.LogUtil;
 import com.yoga.oneweather.util.MiscUtil;
 
 import static java.lang.Math.PI;
@@ -147,7 +147,7 @@ public class SunriseSunset extends View {
         drawArc(canvas);
         drawText(canvas);
         canvas.restore();
-        Log.d(TAG, "onDraw: ");
+        LogUtil.d(TAG, "onDraw: ");
     }
 
     private void drawText(Canvas canvas) {
@@ -158,7 +158,7 @@ public class SunriseSunset extends View {
     }
 
     private void drawArc(Canvas canvas) {
-        Log.d(TAG, "drawArc: "+percent);
+        LogUtil.d(TAG, "drawArc: "+percent);
         float nowAngle;
         if(percent == 0){
             nowAngle = 0 ;
@@ -184,7 +184,7 @@ public class SunriseSunset extends View {
 
         if(isSetTime){
             float nowPercent = (float) (mNowTime)/(float) mTotalTime;//这个float一定要转啊，不然会一致都是0
-            Log.d(TAG, "startAnimator: ");
+            LogUtil.d(TAG, "startAnimator: ");
             if(nowPercent<0.02){//如果太阳只升起来一点就不画动画了,没出也不画
                 setPercent(0f);
             }else if(nowPercent>0.98){

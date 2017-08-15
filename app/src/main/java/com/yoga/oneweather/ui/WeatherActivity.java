@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -26,19 +25,20 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yoga.oneweather.R;
-import com.yoga.oneweather.model.db.DBManager;
-import com.yoga.oneweather.model.entity.AQI;
-import com.yoga.oneweather.model.entity.Forecast;
-import com.yoga.oneweather.model.entity.Weather;
-import com.yoga.oneweather.service.AutoUpdateService;
-import com.yoga.oneweather.util.Constant;
-import com.yoga.oneweather.util.HttpUtil;
-import com.yoga.oneweather.util.PreferencesUtil;
-import com.yoga.oneweather.util.VisibilityCheckUtil;
-import com.yoga.oneweather.util.WeatherHandleUtil;
 import com.yoga.oneweather.customview.CircleProgress;
 import com.yoga.oneweather.customview.SunriseSunset;
 import com.yoga.oneweather.customview.Windmill;
+import com.yoga.oneweather.model.db.DBManager;
+import com.yoga.oneweather.model.entity.weather.AQI;
+import com.yoga.oneweather.model.entity.weather.Forecast;
+import com.yoga.oneweather.model.entity.weather.Weather;
+import com.yoga.oneweather.service.AutoUpdateService;
+import com.yoga.oneweather.util.Constant;
+import com.yoga.oneweather.util.HttpUtil;
+import com.yoga.oneweather.util.JSONHandleUtil;
+import com.yoga.oneweather.util.LogUtil;
+import com.yoga.oneweather.util.PreferencesUtil;
+import com.yoga.oneweather.util.VisibilityCheckUtil;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -179,7 +179,7 @@ public class WeatherActivity extends AppCompatActivity {
             public void onScrollChanged() {//检测滑动，控制动画的播放
                // Rect scrollBounds = new Rect();
                // scrollView.getHitRect(scrollBounds);
-                //Log.d(TAG, "onScrollChanged: HitRect:"+scrollBounds.toString());
+                //LogUtil.d(TAG, "onScrollChanged: HitRect:"+scrollBounds.toString());
 
                 for(int i = 0 ;i< views.length;i++){
                     View nowView = views[i];
@@ -205,6 +205,7 @@ public class WeatherActivity extends AppCompatActivity {
 
 
         String cityId = getIntent().getStringExtra("CityId");
+        LogUtil.d(TAG, "onCreate: "+cityId);
         String weatherString = PreferencesUtil.get("weather",null);
         if(cityId != null){//由intent启动
             swipeRefresh.setRefreshing(true);
@@ -216,7 +217,7 @@ public class WeatherActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }else {//有缓存
-                mWeather = WeatherHandleUtil.handleWeatherResponse(weatherString);
+                mWeather = JSONHandleUtil.handleWeatherResponse(weatherString);
                 showWeatherInfo(mWeather);
                 cityId = mWeather.basic.id;
             }
@@ -256,8 +257,8 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 final String respon = response.body().string();
-                Log.d(TAG, "onResponse: "+respon);
-                mWeather = WeatherHandleUtil.handleWeatherResponse(respon);
+                LogUtil.d(TAG, "onResponse: "+respon);
+                mWeather = JSONHandleUtil.handleWeatherResponse(respon);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -292,8 +293,10 @@ public class WeatherActivity extends AppCompatActivity {
         int now_cond_code = Integer.parseInt(weather.now.now_cond.code);
         int imageId = getBgImageId(now_cond_code);//获得背景id
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),imageId);
+
         bitmap = blur(bitmap);//高斯模糊
         bg_image.setImageBitmap(bitmap);
+
 
         String updateTime = weather.basic.update.updateTime.split(" ")[1] + "发布";
 
@@ -306,7 +309,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         forcastLayout.removeAllViews();//清空，不然会越来越多
         for(Forecast forecast : weather.forecastList){
-            Log.d(TAG, "showWeatherInfo: "+forecast.toString());
+            LogUtil.d(TAG, "showWeatherInfo: "+forecast.toString());
             if(flag == false){
                 uv_index = forecast.uv;
                 sunriseTime = forecast.astro.sunrise;
@@ -378,7 +381,7 @@ public class WeatherActivity extends AppCompatActivity {
         SimpleDateFormat formater = new SimpleDateFormat("HH:mm", Locale.CHINA);
         Date curDate = new Date(System.currentTimeMillis());
         String nowTime = formater.format(curDate);
-        Log.d(TAG, "showWeatherInfo: "+sunriseTime + "  "+ sunsetTime+"  "+ nowTime);
+        LogUtil.d(TAG, "showWeatherInfo: "+sunriseTime + "  "+ sunsetTime+"  "+ nowTime);
         sunriseSunset.setTime(sunriseTime,sunsetTime,nowTime);
 
     }
@@ -407,6 +410,7 @@ public class WeatherActivity extends AppCompatActivity {
         blur.setRadius(BLUR_RADIUS);
         blur.forEach(allocation);
         allocation.copyTo(bitmap);
+
         rs.destroy();
         return bitmap;
     }

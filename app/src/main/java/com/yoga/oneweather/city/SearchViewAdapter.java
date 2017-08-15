@@ -26,15 +26,15 @@ public class SearchViewAdapter extends RecyclerView.Adapter {
 
     private int locateState = LOCATE_ING;
 
-    private List<CityInfoData> cityInfoDataList;//所有城市
+    private List<CityDao> cityDaoList;//所有城市
     private ArrayList<Pair<String,String>> hotCities ;//热门城市
     private CityDao locateCity;//定位城市
 
     private OnCityClickListener onCityClickListener;
     private OnLocateClickListener onLocateClickListener;
 
-    public SearchViewAdapter(List<CityInfoData> cityInfoDataList){
-        this.cityInfoDataList = cityInfoDataList;
+    public SearchViewAdapter(List<CityDao> CityDaoList){
+        this.cityDaoList = CityDaoList;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class SearchViewAdapter extends RecyclerView.Adapter {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onCityClickListener.onCityClick((cityInfoDataList.get(viewHolder.getLayoutPosition()-ITEM_CITY).getmCityId()));
+                    onCityClickListener.onCityClick((cityDaoList.get(viewHolder.getLayoutPosition()-ITEM_CITY).getCityId()));
                 }
             });
         }
@@ -90,8 +90,8 @@ public class SearchViewAdapter extends RecyclerView.Adapter {
                 ((HeaderHolder)holder).locateText.setText(locateCity.getCityName());
             }
         }else if(holder instanceof CityHolder) {
-            CityInfoData city = cityInfoDataList.get(position-ITEM_CITY);
-            ((CityHolder)holder).itemCityName.setText(city.getmCityName());
+            CityDao city = cityDaoList.get(position-ITEM_CITY);
+            ((CityHolder)holder).itemCityName.setText(city.getCityName());
             if(!(city.getmInitial().equals("#"))){
                 ((CityHolder) holder).itemLetter.setText(city.getmInitial());
                 ((CityHolder) holder).itemLetter.setVisibility(View.VISIBLE);//设置字母可见
@@ -104,7 +104,7 @@ public class SearchViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return cityInfoDataList.size()+1;
+        return cityDaoList.size()+1;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.yoga.oneweather.model.db;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
 /**
@@ -15,9 +16,21 @@ public class CityDao extends DataSupport {
      * lon : 114.20
      * prov : 海南
      */
+    @Column(ignore = true)
+    private String mInitial = "#";
+
     private String cityName;
     private String cityId;
     private String pinyin;
+
+
+    public String getmInitial() {
+        return mInitial;
+    }
+
+    public void setmInitial(String mInitial) {
+        this.mInitial = mInitial;
+    }
 
     public String getCityName() {
         return cityName;

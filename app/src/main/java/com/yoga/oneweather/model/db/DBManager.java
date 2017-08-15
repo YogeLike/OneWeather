@@ -1,16 +1,15 @@
 package com.yoga.oneweather.model.db;
 
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.github.promeg.pinyinhelper.Pinyin;
-import com.google.gson.reflect.TypeToken;
 import com.yoga.oneweather.MyApplication;
-import com.yoga.oneweather.city.CityInfoData;
-import com.yoga.oneweather.model.entity.City;
-import com.yoga.oneweather.model.entity.Weather;
+import com.yoga.oneweather.model.entity.city.County;
+import com.yoga.oneweather.model.entity.weather.Weather;
+import com.yoga.oneweather.ui.WeatherActivity;
 import com.yoga.oneweather.util.FileUtil;
+import com.yoga.oneweather.util.JSONHandleUtil;
+import com.yoga.oneweather.util.LogUtil;
 import com.yoga.oneweather.util.PreferencesUtil;
 
 import org.litepal.crud.DataSupport;
@@ -61,21 +60,19 @@ public class DBManager {
 
 
 
-            String citys = FileUtil.assertFile2String("cityList.json", MyApplication.getContext());
-            List<City> cityList = MyApplication.getGson().fromJson(citys, new TypeToken<List<City>>() {
-            }.getType());
+            String allcities = FileUtil.assertFile2String("ChinaCityList.json", MyApplication.getContext());
+            List<County> countyList = JSONHandleUtil.handleCitiesJSONData(allcities);
 
             //对数据进行排序后存入数据库
-            Collections.sort(cityList, new CityComparator());
+            Collections.sort(countyList, new CountyComparator());
             List<CityDao> cityDaoList = new ArrayList<>();
-            for (City city : cityList) {
-                String pinyin = Pinyin.toPinyin(city.getCityName(), "");
+            for (County county : countyList) {
 
                 CityDao cityDao = new CityDao();
-                cityDao.setCityName(city.getCityName());
+                cityDao.setCityName(county.countyName);
 
-                cityDao.setCityId(city.getId());
-                cityDao.setPinyin(pinyin);
+                cityDao.setCityId(county.countyNo);
+                cityDao.setPinyin(county.countyPY);
                 cityDaoList.add(cityDao);
 
             }
@@ -84,17 +81,17 @@ public class DBManager {
                 @Override
                 public void onFinish(boolean success) {
                     if(success){
-                        Log.d("SaveCityDao", "onFinish: "+"Success");
+                        LogUtil.d("SaveCityDao", "onFinish: "+"Success");
                         PreferencesUtil.put(CITY_INITED, true);
+
                     }else {
-                        Log.d("SaveCityDao","Failed");
-                        Toast.makeText(MyApplication.getContext(),"城市数据初始化失败,跳转至默认城市",Toast.LENGTH_SHORT);
+                        LogUtil.d("SaveCityDao","Failed");
+                        Toast.makeText(MyApplication.getContext(),"城市数据初始化失败,跳转至默认城市,\n重启可重新初始化",Toast.LENGTH_LONG).show();
+                        WeatherActivity.actionStart(MyApplication.getContext(),"CN101280101");
 
                     }
-
                 }
             });
-
 
         }
 
@@ -102,33 +99,32 @@ public class DBManager {
 
     }
 
-    private List<CityInfoData> getCities(final String keyword){
+    private List<CityDao> getCities(final String keyword){
         List<CityDao> cityDaoList;
-        long timeMills = System.currentTimeMillis();
+        //long timeMills = System.currentTimeMillis();
         if(keyword == null){
             cityDaoList = DataSupport.findAll(CityDao.class);
         }else {
             cityDaoList = DataSupport.where("cityName like ? or pinyin like ?", "%"+keyword+"%", "%"+keyword+"%").order("pinyin").find(CityDao.class);
         }
-        Log.d(TAG, "getCities: "+(System.currentTimeMillis()-timeMills)+"ms");
+       // LogUtil.d(TAG, "getCities: "+(System.currentTimeMillis()-timeMills)+"ms");
 
 
-        String lastInital = "";
-        String currentInital;
-        List<CityInfoData> result = new ArrayList<>();
 
-        for(CityDao cityDao : cityDaoList){
-            CityInfoData city = new CityInfoData(cityDao.getCityName(),cityDao.getPinyin(),cityDao.getCityId());
-            currentInital = cityDao.getPinyin().substring(0,1);
-            if((!(currentInital.equals(lastInital))) && keyword == null){
-                Log.d("getCities:", "last:"+lastInital+" current:"+currentInital);
-                lastInital = currentInital;
-                city.setmInitial(currentInital);
 
+        if(keyword == null){
+            String lastInital = "";
+            String currentInital;
+            for(CityDao city : cityDaoList){
+                currentInital = city.getPinyin().substring(0,1);
+                if(!currentInital.equals(lastInital)){
+                    LogUtil.d("getCities:", "last:"+lastInital+" current:"+currentInital);
+                    lastInital = currentInital;
+                    city.setmInitial(currentInital.toUpperCase());
+                }
             }
-            result.add(city);
         }
-        return result;
+        return cityDaoList;
     }
 
     public CityDao findCity(String city){
@@ -140,11 +136,11 @@ public class DBManager {
         }
     }
 
-    public List<CityInfoData> getAllCities(){
+    public List<CityDao> getAllCities(){
         return getCities(null);
     }
 
-    public List<CityInfoData> getSearchCities(String keyword){
+    public List<CityDao> getSearchCities(String keyword){
         return getCities(keyword);
     }
 
@@ -176,14 +172,14 @@ public class DBManager {
     /**
      * a-z 排序,比较器
      */
-    private class CityComparator implements Comparator<City>{
+    private class CountyComparator implements Comparator<County>{
 
         @Override
-        public int compare(City c1, City c2) {
-            String a = Pinyin.toPinyin(c1.getCityName(),"");
-            String b = Pinyin.toPinyin(c2.getCityName(),"");
-
-            return a.compareTo(b);
+        public int compare(County c1, County c2) {
+            int l1 = c1.countyPY.length();
+            int l2 = c2.countyPY.length();
+            int shortLength = l1>l2 ? l2:l1;
+            return c1.countyPY.substring(0,shortLength).compareTo(c2.countyPY.substring(0,shortLength));
         }
     }
 }

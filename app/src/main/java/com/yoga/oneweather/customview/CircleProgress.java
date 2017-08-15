@@ -13,12 +13,12 @@ import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.yoga.oneweather.BuildConfig;
 import com.yoga.oneweather.R;
 import com.yoga.oneweather.util.Constant;
+import com.yoga.oneweather.util.LogUtil;
 import com.yoga.oneweather.util.MiscUtil;
 
 /**
@@ -223,7 +223,7 @@ public class CircleProgress extends View{
 
 
     public void startAnimation() {
-        Log.d(TAG, "startAnimator: "+"invoke...");
+        LogUtil.d(TAG, "startAnimator: "+"invoke...");
         mAnimator = ValueAnimator.ofFloat(0,mValue/(float)mMaxValue);
         mAnimator.setDuration((long) (2000+20*mValue));
         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -231,7 +231,7 @@ public class CircleProgress extends View{
             public void onAnimationUpdate(ValueAnimator animation) {
                 mPercent = (float) animation.getAnimatedValue();
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "onAnimationUpdate: percent = " + mPercent
+                    LogUtil.d(TAG, "onAnimationUpdate: percent = " + mPercent
                             + ";currentAngle = " + (mSweepAngle * mPercent)
                             + ";value = " + mValue);
                 }
@@ -281,7 +281,7 @@ public class CircleProgress extends View{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.d(TAG, "onDraw: "+"invoke");
+        LogUtil.d(TAG, "onDraw: "+"invoke");
         drawText(canvas);
         drawArc(canvas);
     }
@@ -309,7 +309,7 @@ public class CircleProgress extends View{
         //3点钟方向为0度，顺时针递增，startAngle超过取360 或小于0 与360 取余
         //useCenter 如果为true 时 ，绘制圆弧将圆心包含，通常用来绘制扇形
         canvas.drawArc(mRectF,0,currentAngle,false,mArcPaint);
-        Log.d(TAG, "drawArc: "+currentAngle);
+        LogUtil.d(TAG, "drawArc: "+currentAngle);
         canvas.restore();
     }
 
@@ -318,7 +318,7 @@ public class CircleProgress extends View{
      * @param value
      */
     public void setValue(float value) {
-        Log.d(TAG, "setValue: "+value);
+        LogUtil.d(TAG, "setValue: "+value);
         if(value > mMaxValue){
             value = mMaxValue;
         }

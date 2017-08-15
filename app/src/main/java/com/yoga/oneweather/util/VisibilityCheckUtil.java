@@ -1,7 +1,6 @@
 package com.yoga.oneweather.util;
 
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -17,7 +16,7 @@ public class VisibilityCheckUtil {
 
         Rect rect = new Rect();
         boolean b = view.getLocalVisibleRect(rect);
-        Log.d("VisibilityCheck", view.getClass().getSimpleName()+": "+ b +"   "+view.getWidth()+view.getHeight()+"  "+rect.toString());
+        LogUtil.d("VisibilityCheck", view.getClass().getSimpleName()+": "+ b +"   "+view.getWidth()+view.getHeight()+"  "+rect.toString());
         if(b){
             if(rect.width()==view.getMeasuredWidth() && rect.height()== view.getMeasuredHeight()){//这里用完全可见，也可调节比例
                 return ALL_VISIBLE;

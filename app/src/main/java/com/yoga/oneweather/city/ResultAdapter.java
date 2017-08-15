@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yoga.oneweather.R;
+import com.yoga.oneweather.model.db.CityDao;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    private List<CityInfoData> resultList;
+    private List<CityDao> resultList;
 
 
     private OnCityClickListener onCityClickListener;
@@ -31,7 +32,7 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public ResultAdapter(List<CityInfoData> resultCities){
+    public ResultAdapter(List<CityDao> resultCities){
         this.resultList = resultCities;
     }
 
@@ -42,7 +43,7 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCityClickListener.onCityClick(resultList.get(holder.getLayoutPosition()).getmCityId());
+                onCityClickListener.onCityClick(resultList.get(holder.getLayoutPosition()).getCityId());
             }
         });
         return holder;
@@ -51,7 +52,7 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder)holder).cityName.setText(resultList.get(position).getmCityName());
+        ((ViewHolder)holder).cityName.setText(resultList.get(position).getCityName());
 
     }
 

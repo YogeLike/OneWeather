@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -25,13 +24,13 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.yoga.oneweather.R;
-import com.yoga.oneweather.city.CityInfoData;
 import com.yoga.oneweather.city.OnCityClickListener;
 import com.yoga.oneweather.city.ResultAdapter;
 import com.yoga.oneweather.city.SearchViewAdapter;
+import com.yoga.oneweather.customview.SideLetterBar;
 import com.yoga.oneweather.model.db.CityDao;
 import com.yoga.oneweather.model.db.DBManager;
-import com.yoga.oneweather.customview.SideLetterBar;
+import com.yoga.oneweather.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +48,10 @@ public class SearchActivity extends AppCompatActivity {
     private List<String> permissionList = new ArrayList<>();
 
     private RecyclerView cityView;
-    private List<CityInfoData> cityList;
+    private List<CityDao> cityList;
     SearchViewAdapter searchViewAdapter;
     private RecyclerView resultView;
-    private List<CityInfoData> resultList ;
+    private List<CityDao> resultList ;
     ResultAdapter resultAdapter;
 
     private SideLetterBar sideBar;
@@ -136,7 +135,7 @@ public class SearchActivity extends AppCompatActivity {
 
                     String city = aMapLocation.getCity();
                     String district = aMapLocation.getDistrict();
-                    Log.d(TAG, "onLocationChanged: district:"+district+"city:"+city);
+                    LogUtil.d(TAG, "onLocationChanged: district:"+district+"CityDao:"+city);
                     //区分是否是县
                     String location = district.endsWith("县")||district.endsWith("区") ? district.substring(0, district.length() - 1) : city.substring(0, city.length() - 1);
                     //重置定位状态
@@ -277,7 +276,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private int getLetterPosition(String letter, List<CityInfoData> dataList) {
+    private int getLetterPosition(String letter, List<CityDao> dataList) {
         int i = 0;
         for (; i < dataList.size(); i++) {
             if (dataList.get(i).getmInitial().equals(letter)) {

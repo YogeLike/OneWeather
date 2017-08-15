@@ -3,8 +3,7 @@ package com.yoga.oneweather;
 import android.app.Application;
 import android.content.Context;
 
-import com.github.promeg.pinyinhelper.Pinyin;
-import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict;
+
 import com.google.gson.Gson;
 import com.yoga.oneweather.model.db.DBManager;
 
@@ -26,7 +25,6 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         LitePal.initialize(context);
-        Pinyin.init(Pinyin.newConfig().with(CnCityDict.getInstance(context)));
         DBManager.getInstance().copyCitysToDB();
 
 

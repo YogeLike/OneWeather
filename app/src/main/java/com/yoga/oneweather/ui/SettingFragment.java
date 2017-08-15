@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.yoga.oneweather.R;
+import com.yoga.oneweather.util.LogUtil;
 
 /**
  * Created by wyg on 2017/8/12.
@@ -38,7 +38,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         if("auto_update_rate".equals(key)){
             Preference update_rate = findPreference(key);
             update_rate.setSummary(sharedPreferences.getString(key,"6")+"小时");
-            Log.d("SettingFragment", "onSharedPreferenceChanged: ");
+            LogUtil.d("SettingFragment", "onSharedPreferenceChanged: ");
         }
 
     }

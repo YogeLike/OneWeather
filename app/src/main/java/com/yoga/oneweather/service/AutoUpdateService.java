@@ -8,11 +8,11 @@ import android.os.IBinder;
 import android.os.SystemClock;
 
 import com.yoga.oneweather.model.db.DBManager;
-import com.yoga.oneweather.model.entity.Weather;
+import com.yoga.oneweather.model.entity.weather.Weather;
 import com.yoga.oneweather.util.Constant;
 import com.yoga.oneweather.util.HttpUtil;
 import com.yoga.oneweather.util.PreferencesUtil;
-import com.yoga.oneweather.util.WeatherHandleUtil;
+import com.yoga.oneweather.util.JSONHandleUtil;
 
 import java.io.IOException;
 
@@ -49,9 +49,9 @@ public class AutoUpdateService extends Service {
     private void updateWeather() {
         String weatherString = PreferencesUtil.get("weather",null);
         if(weatherString != null){
-            Weather weather = WeatherHandleUtil.handleWeatherResponse(weatherString);
+            Weather weather = JSONHandleUtil.handleWeatherResponse(weatherString);
             String cityId = weather.basic.id;
-            String address = Constant.WEATHER_URL+"weather?city="+cityId+"&key="+Constant.WEATHER_KEY;
+            String address = Constant.WEATHER_URL+"weather?CityDao="+cityId+"&key="+Constant.WEATHER_KEY;
             HttpUtil.sendOkHttpClient(address, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -61,7 +61,7 @@ public class AutoUpdateService extends Service {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String newWeatherString = response.body().string();
-                    Weather newWeather = WeatherHandleUtil.handleWeatherResponse(newWeatherString);
+                    Weather newWeather = JSONHandleUtil.handleWeatherResponse(newWeatherString);
                     if(newWeather != null && "ok".equals(newWeather.status)){
                         PreferencesUtil.put("weather",newWeatherString);
                         DBManager.getInstance().saveOrUpdateCityWeather(newWeather);//更新或保存天气

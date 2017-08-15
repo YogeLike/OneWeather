@@ -11,11 +11,11 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.yoga.oneweather.R;
+import com.yoga.oneweather.util.LogUtil;
 import com.yoga.oneweather.util.MiscUtil;
 
 import static java.lang.Math.PI;
@@ -57,7 +57,7 @@ public class Windmill extends View {
 
     public Windmill(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Log.d(TAG, "Windmill: "+"构造函数");
+        LogUtil.d(TAG, "Windmill: "+"构造函数");
         mContext = context;
         init(attrs);
         
@@ -95,7 +95,7 @@ public class Windmill extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         setMeasuredDimension(MiscUtil.measure(widthMeasureSpec,mDefualtSize),MiscUtil.measure(heightMeasureSpec, (int) (mDefualtSize*1.3)));
-        Log.d(TAG, "onMeasure: ");
+        LogUtil.d(TAG, "onMeasure: ");
     }
 
     @Override
@@ -105,7 +105,7 @@ public class Windmill extends View {
         mCenterPoint.x = (int) (w * mWindLengthPercent);
         mCenterPoint.y = (int) (w * mWindLengthPercent);
         setBladeLocate();
-        Log.d(TAG, "onSizeChanged: ");
+        LogUtil.d(TAG, "onSizeChanged: ");
     }
 
 
@@ -143,7 +143,7 @@ public class Windmill extends View {
         drawPillar(canvas);
 
         canvas.restore();
-      //  Log.d(TAG, "onDraw: ");
+      //  LogUtil.d(TAG, "onDraw: ");
 
 
     }

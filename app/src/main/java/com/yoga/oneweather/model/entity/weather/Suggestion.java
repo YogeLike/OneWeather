@@ -1,4 +1,4 @@
-package com.yoga.oneweather.model.entity;
+package com.yoga.oneweather.model.entity.weather;
 
 /**
  * Created by wyg on 2017/7/29.

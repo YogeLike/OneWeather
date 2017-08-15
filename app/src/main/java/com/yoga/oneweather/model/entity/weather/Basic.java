@@ -1,4 +1,4 @@
-package com.yoga.oneweather.model.entity;
+package com.yoga.oneweather.model.entity.weather;
 
 import com.google.gson.annotations.SerializedName;
 
