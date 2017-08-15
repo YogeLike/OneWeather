@@ -6,7 +6,7 @@
     <TextView
         android:id="@+id/item_city_letter"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="23dp"
         android:paddingLeft="15dp"
         android:visibility="gone"
         android:gravity="center_vertical"
@@ -17,7 +17,7 @@
     <TextView
         android:id="@+id/item_city_name"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="44dp"
         android:paddingLeft="15dp"
         android:background="?selectableItemBackground"
         android:gravity="center_vertical"

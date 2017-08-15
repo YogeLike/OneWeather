@@ -19,7 +19,7 @@
     <dimen name="common_dimen_super_huge">40dp</dimen>
     <dimen name="float_button_margin">16dp</dimen>
 
-    <dimen name="side_letter_bar_width">36dp</dimen>
+    <dimen name="side_letter_bar_width">33dp</dimen>
     <dimen name="search_icon_padding">12dp</dimen>
     <dimen name="search_view_text_padding">65dp</dimen>
 
@@ -31,7 +31,7 @@
     <dimen name="text_size_small">11sp</dimen>
     <dimen name="text_size_default">14sp</dimen>
     <dimen name="text_size_medium">17sp</dimen>
-    <dimen name="text_size_title">22sp</dimen>
+    <dimen name="text_size_title">20sp</dimen>
     <dimen name="text_size_big_title">24sp</dimen>
     <dimen name="text_size_big">34sp</dimen>
     <dimen name="text_size_huge">40sp</dimen>

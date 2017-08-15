@@ -2,6 +2,7 @@ package com.yoga.oneweather.model.db;
 
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +14,7 @@ import com.yoga.oneweather.util.FileUtil;
 import com.yoga.oneweather.util.PreferencesUtil;
 
 import org.litepal.crud.DataSupport;
+import org.litepal.crud.callback.SaveCallback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class DBManager {
     private String DB_PATH = File.separator + "data"
                 + Environment.getDataDirectory().getAbsolutePath() + File.separator
                 + MyApplication.getContext().getPackageName() + File.separator + "databases";
+    private static final String TAG = "DBManager";
     private String DB_NAME = "one_weather";
     private DBManager(){
 
@@ -64,7 +67,7 @@ public class DBManager {
 
             //对数据进行排序后存入数据库
             Collections.sort(cityList, new CityComparator());
-
+            List<CityDao> cityDaoList = new ArrayList<>();
             for (City city : cityList) {
                 String pinyin = Pinyin.toPinyin(city.getCityName(), "");
 
@@ -73,9 +76,26 @@ public class DBManager {
 
                 cityDao.setCityId(city.getId());
                 cityDao.setPinyin(pinyin);
-                cityDao.save();
+                cityDaoList.add(cityDao);
+
             }
-            PreferencesUtil.put(CITY_INITED, true);
+
+            DataSupport.saveAllAsync(cityDaoList).listen(new SaveCallback() {
+                @Override
+                public void onFinish(boolean success) {
+                    if(success){
+                        Log.d("SaveCityDao", "onFinish: "+"Success");
+                        PreferencesUtil.put(CITY_INITED, true);
+                    }else {
+                        Log.d("SaveCityDao","Failed");
+                        Toast.makeText(MyApplication.getContext(),"城市数据初始化失败,跳转至默认城市",Toast.LENGTH_SHORT);
+
+                    }
+
+                }
+            });
+
+
         }
 
 
@@ -84,11 +104,13 @@ public class DBManager {
 
     private List<CityInfoData> getCities(final String keyword){
         List<CityDao> cityDaoList;
+        long timeMills = System.currentTimeMillis();
         if(keyword == null){
             cityDaoList = DataSupport.findAll(CityDao.class);
         }else {
             cityDaoList = DataSupport.where("cityName like ? or pinyin like ?", "%"+keyword+"%", "%"+keyword+"%").order("pinyin").find(CityDao.class);
         }
+        Log.d(TAG, "getCities: "+(System.currentTimeMillis()-timeMills)+"ms");
 
 
         String lastInital = "";
@@ -128,6 +150,7 @@ public class DBManager {
 
 
     public List<FollowedCityWeather> getCitiesWeather(){
+
         return DataSupport.findAll(FollowedCityWeather.class);
     }
 

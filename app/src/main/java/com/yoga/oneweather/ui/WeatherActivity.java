@@ -348,11 +348,11 @@ public class WeatherActivity extends AppCompatActivity {
             aqi_no2.setText(no2);
             aqi_o3.setText(o3);
             aqi_so2.setText(so2);
-            if(city.co == null){//不太发达的没有提供这几个数据
-                aqi_co.setVisibility(View.INVISIBLE);
-                aqi_no2.setVisibility(View.INVISIBLE);
-                aqi_o3.setVisibility(View.INVISIBLE);
-                aqi_so2.setVisibility(View.INVISIBLE);
+            if(city.co == null){//区县的没有提供这几个数据
+                aqi_co.setVisibility(View.GONE);
+                aqi_no2.setVisibility(View.GONE);
+                aqi_o3.setVisibility(View.GONE);
+                aqi_so2.setVisibility(View.GONE);
             }
         }else {
             aqiLayout.setVisibility(View.GONE);
@@ -383,7 +383,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
-    private int getBgImageId(int now_cond_code) {
+    private int getBgImageId(int now_cond_code) {//获得背景图片id
         for(int i = 0 ; i<code_array.length;i++){
             if(code_array[i].length>0){
                 for(int j = 0 ; j<code_array[i].length;j++){

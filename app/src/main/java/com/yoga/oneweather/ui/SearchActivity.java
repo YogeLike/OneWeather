@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -61,7 +62,7 @@ public class SearchActivity extends AppCompatActivity {
     private ImageButton mActionEmptyBtn;
     private ImageButton mActionBack;
 
-
+    private static final String TAG = "SearchActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +136,9 @@ public class SearchActivity extends AppCompatActivity {
 
                     String city = aMapLocation.getCity();
                     String district = aMapLocation.getDistrict();
+                    Log.d(TAG, "onLocationChanged: district:"+district+"city:"+city);
                     //区分是否是县
-                    String location = district.contains("县") ? district.substring(0, district.length() - 1) : city.substring(0, city.length() - 1);
+                    String location = district.endsWith("县")||district.endsWith("区") ? district.substring(0, district.length() - 1) : city.substring(0, city.length() - 1);
                     //重置定位状态
                     CityDao cityDao = DBManager.getInstance().findCity(location);
                     if (cityDao == null) {

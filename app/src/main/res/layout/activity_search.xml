@@ -18,10 +18,11 @@
 
     <com.yoga.oneweather.customview.SideLetterBar
         android:id="@+id/letter_side"
-        android:layout_width="36dp"
+        android:layout_width="@dimen/side_letter_bar_width"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/search_top_bar" />
+        android:layout_below="@id/search_top_bar"
+        android:layout_marginBottom="@dimen/common_dimen_tiny"/>
 
     <TextView
         android:id="@+id/letter_overlay"

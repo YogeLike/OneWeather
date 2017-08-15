@@ -49,7 +49,7 @@ public class FollowedActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT <23) {
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            getWindow().setStatusBarColor(0x10000000);//浅黑
+            getWindow().setStatusBarColor(0x1A000000);//浅黑
         } else if (Build.VERSION.SDK_INT >= 23) {
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

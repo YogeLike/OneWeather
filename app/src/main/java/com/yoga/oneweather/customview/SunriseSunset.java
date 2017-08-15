@@ -171,9 +171,9 @@ public class SunriseSunset extends View {
 
             canvas.drawBitmap(mSunriseBitmap,(float)(mCenterPoint.x - mRadius* cos((nowAngle+18)*(PI/180) + halfRemianAngle )) - mSunriseBitmap.getWidth()/2,(float)(mCenterPoint.y - mRadius* sin((nowAngle+18)*(PI/180)+(halfRemianAngle))) - mSunriseBitmap.getHeight()/2 ,mSunPaint);//18这个数字是我测试出来计算过程中损失的各种度数
         }
-        canvas.drawArc(mRectF,STARTANGLE + nowAngle,sweepAngle - nowAngle,false,mArcPaint);//弧
+        canvas.drawArc(mRectF,STARTANGLE + nowAngle+1f,sweepAngle - nowAngle,false,mArcPaint);//弧
         canvas.drawLine(0,lineYLocate,width,lineYLocate,mArcPaint);//线
-        canvas.drawArc(mRectF,STARTANGLE,nowAngle,false,mSunPaint);
+        canvas.drawArc(mRectF,STARTANGLE,nowAngle-3f,false,mSunPaint);//留出3度让小太阳背景空白
 
 
 
@@ -186,7 +186,7 @@ public class SunriseSunset extends View {
             float nowPercent = (float) (mNowTime)/(float) mTotalTime;//这个float一定要转啊，不然会一致都是0
             Log.d(TAG, "startAnimator: ");
             if(nowPercent<0.02){//如果太阳只升起来一点就不画动画了,没出也不画
-                setPercent(0);
+                setPercent(0f);
             }else if(nowPercent>0.98){
                 setPercent(1);
             }else {
@@ -214,9 +214,8 @@ public class SunriseSunset extends View {
 
     public void setPercent(float percent) {
         this.percent = percent;
-        if(percent>0 && percent < 1){//这里控制日出前日落后不重绘//可以删除，因为前面过滤了
-            invalidate();
-        }
+        invalidate();
+
 
     }
 

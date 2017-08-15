@@ -25,7 +25,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/common_dimen_huge"
+            android:layout_marginLeft="@dimen/common_dimen_big"
             android:layout_marginRight="@dimen/common_dimen_big">
 
             <TextView

@@ -8,14 +8,14 @@
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/common_dimen_big"/>
+        android:layout_marginLeft="@dimen/common_dimen_mid"/>
     <TextView
         android:id="@+id/followed_city_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/weather_image"
-        android:layout_marginLeft="@dimen/common_dimen_big"
+        android:layout_marginLeft="@dimen/common_dimen"
         android:textSize="@dimen/text_size_medium"/>
     <TextView
         android:id="@+id/followed_city_tmp"

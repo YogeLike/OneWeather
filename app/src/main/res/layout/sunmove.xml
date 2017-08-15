@@ -4,14 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="@dimen/common_dimen_big">
+    >
 
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_dimen_big"
+        android:text="天文"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/white"/>
     <com.yoga.oneweather.customview.SunriseSunset
         android:id="@+id/sunmove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_dimen_big"
         android:layout_marginTop="@dimen/common_dimen_huge"
         app:lineColor="@color/white"
         app:sunColor="@color/orange500"
