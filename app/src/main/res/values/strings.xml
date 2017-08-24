@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OneWeather</string>
+    <string name="app_name">一个天气</string>
     <string name="select_city">选择城市</string>
     <string name="hot_city">热门城市</string>
     <string name="located_city">定位城市</string>

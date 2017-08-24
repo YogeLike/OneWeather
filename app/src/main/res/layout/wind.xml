@@ -49,7 +49,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginTop="@dimen/common_dimen_big"
-            android:layout_marginLeft="@dimen/common_dimen_big">
+            android:layout_marginLeft="@dimen/common_dimen_mid">
 
             <TextView
                 android:id="@+id/wind_dir"
