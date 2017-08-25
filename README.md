@@ -3,11 +3,14 @@
 应用已经上线百度应用助手，
 感兴趣的可以下下来看看。
 
-[百度手机助手](http://shouji.baidu.com/software/22060484.html)
+[百度手机助手](http://shouji.baidu.com/software/22121324.html)
 
 ![](http://i.imgur.com/wWooDOP.png)
 
-![](http://i.imgur.com/4aqqnAj.png)
+![](http://i.imgur.com/a7Xl3GM.png)
+
+   扫描二维码下载
+
 
 ## 概述
 这是我学完郭神的《第一行代码》后的一个练手APP，采用okhttp3请求天气，gson解析城市数据和天气数据。
