@@ -13,4 +13,5 @@ public class Province {
     @SerializedName("city")
     public List<City> cities;
 
+
 }
