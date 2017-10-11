@@ -33,7 +33,7 @@ public class SettingActivity extends AppCompatActivity{
 
 
         if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT <23) {
-            getWindow().setStatusBarColor(0x1A000000);//浅黑
+            getWindow().setStatusBarColor(0x22000000);//浅黑
         } else if (Build.VERSION.SDK_INT >= 23) {
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

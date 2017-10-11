@@ -46,7 +46,7 @@ public class SideLetterBar extends View {
         int singleHeight = height/INITIAL.length;
         for(int i=0;i<INITIAL.length;i++){
             paint.setTextSize(getResources().getDimension(R.dimen.text_size_small));
-            paint.setColor(Color.BLUE);
+            paint.setColor(Color.BLACK);
             paint.setAntiAlias(true);
             //x坐标等于中间-字符宽度的一半
             float xPos = width/2 - paint.measureText(INITIAL[i])/2;

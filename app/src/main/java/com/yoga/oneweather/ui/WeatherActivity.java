@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Allocation;
@@ -115,7 +117,7 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         bg_image = (ImageView) findViewById(R.id.bg_image);
-
+        changeLight(bg_image,-4);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.light_blue);
 
@@ -248,7 +250,8 @@ public class WeatherActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(WeatherActivity.this,"获取天气失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WeatherActivity.this, "获取天气失败,加载已缓存城市", Toast.LENGTH_SHORT).show();
+                        showCachedWeatherInfo();
                         swipeRefresh.setRefreshing(false);
 
                     }
@@ -272,14 +275,22 @@ public class WeatherActivity extends AppCompatActivity {
 
                             showWeatherInfo(mWeather);
                         } else {
-                            Toast.makeText(WeatherActivity.this, "获取天气失败,", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(WeatherActivity.this, "获取天气失败,加载已缓存城市", Toast.LENGTH_SHORT).show();
+                            showCachedWeatherInfo();
                         }
                         swipeRefresh.setRefreshing(false);
                     }
                 });
             }
         });
+    }
+
+    private void showCachedWeatherInfo(){
+        String cacheWeather = PreferencesUtil.get("weather",null);
+        if(cacheWeather != null){
+            mWeather = JSONHandleUtil.handleWeatherResponse(cacheWeather);
+            showWeatherInfo(mWeather);
+        };
     }
 
     private void showWeatherInfo(Weather weather) {
@@ -298,6 +309,8 @@ public class WeatherActivity extends AppCompatActivity {
         bg_image.setImageBitmap(bitmap);
 
 
+
+
         String updateTime = weather.basic.update.updateTime.split(" ")[1] + "发布";
 
         String now_tmp = weather.now.tmp+"°";
@@ -310,7 +323,7 @@ public class WeatherActivity extends AppCompatActivity {
         forcastLayout.removeAllViews();//清空，不然会越来越多
         for(Forecast forecast : weather.forecastList){
             LogUtil.d(TAG, "showWeatherInfo: "+forecast.toString());
-            if(flag == false){
+            if(!flag){
                 uv_index = forecast.uv;
                 sunriseTime = forecast.astro.sunrise;
                 sunsetTime = forecast.astro.sunset;
@@ -318,7 +331,7 @@ public class WeatherActivity extends AppCompatActivity {
                 now_today_tmp.setText(nowTodayTemp);
                 flag = true;
             }
-            View view = LayoutInflater.from(this).inflate(R.layout.forecast_item,forcastLayout,false);
+            View view = LayoutInflater.from(this).inflate(R.layout.item_forecast,forcastLayout,false);
             TextView date = (TextView) view.findViewById(R.id.date_text);
             TextView con_text = (TextView) view.findViewById(R.id.condition_text);
             TextView daily_tmp = (TextView) view.findViewById(R.id.daily_tmp);
@@ -415,4 +428,11 @@ public class WeatherActivity extends AppCompatActivity {
         return bitmap;
     }
 
+    //改变图片的亮度方法 0--原样 >0---调亮 <0---调暗
+    private void changeLight(ImageView imageView, int brightness) {
+        ColorMatrix cMatrix = new ColorMatrix();
+        cMatrix.set(new float[] { 1, 0, 0, 0, brightness, 0, 1, 0, 0, brightness, // 改变亮度
+                0, 0, 1, 0, brightness, 0, 0, 0, 1, 0 });
+        imageView.setColorFilter(new ColorMatrixColorFilter(cMatrix));
+    }
 }

@@ -2,6 +2,8 @@ package com.yoga.oneweather.ui;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -16,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,21 +35,13 @@ import com.yoga.oneweather.model.db.CityDao;
 import com.yoga.oneweather.model.db.DBManager;
 import com.yoga.oneweather.util.LogUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
     public AMapLocationClient mLocationClient;
-    private String[] LocatePermission = {
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE
 
-    };
-    private List<String> permissionList = new ArrayList<>();
-
+    private RelativeLayout relativeLayout;
     private RecyclerView cityView;
     private List<CityDao> cityList;
     SearchViewAdapter searchViewAdapter;
@@ -68,6 +63,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        relativeLayout = (RelativeLayout) findViewById(R.id.search_layout);
         cityView = (RecyclerView) findViewById(R.id.recyclerView);
         resultView = (RecyclerView) findViewById(R.id.search_result_view);
         sideBar = (SideLetterBar) findViewById(R.id.letter_side);
@@ -79,42 +75,38 @@ public class SearchActivity extends AppCompatActivity {
 
 
         initView();
+
+        if(Build.VERSION.SDK_INT >= 21){
+            relativeLayout.setFitsSystemWindows(true);//5.0以上的显示状态栏
+        }
+        if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT <23) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(0x22000000);//浅黑
+        } else if (Build.VERSION.SDK_INT >= 23) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         initLocation();
-        getPermissions(LocatePermission);
-        if(!permissionList.isEmpty()){
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(this,permissions,1);
+
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }else {
             requestLocation();
         }
 
     }
 
-    //获取需要的权限
-    private void getPermissions(String[] permissions) {
-        for(String permission :permissions){
-            if(ContextCompat.checkSelfPermission(this,permission)!= PackageManager.PERMISSION_GRANTED){
-                permissionList.add(permission);
-            }
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch(requestCode){
             case 1:
-                if(grantResults.length>0){
-                    boolean flag = true;
-                    for(int result : grantResults){
-                        if(result != PackageManager.PERMISSION_GRANTED){
-                            Toast.makeText(this,"必须同意所有权限才能使用定位功能",Toast.LENGTH_SHORT).show();
-                            flag = false;
-                            break;
-                        }
-                    }
-                    if(flag){
-                        requestLocation();
-                    }
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    requestLocation();
+                } else {
+                    Toast.makeText(this,"必须同意所有权限才能使用定位功能",Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:

@@ -29,18 +29,19 @@ public class DBManager {
     private static DBManager dbManager;
     private String CITY_INITED = "CITY_INITED";
     private String DB_PATH = File.separator + "data"
-                + Environment.getDataDirectory().getAbsolutePath() + File.separator
-                + MyApplication.getContext().getPackageName() + File.separator + "databases";
+            + Environment.getDataDirectory().getAbsolutePath() + File.separator
+            + MyApplication.getContext().getPackageName() + File.separator + "databases";
     private static final String TAG = "DBManager";
     private String DB_NAME = "one_weather";
-    private DBManager(){
+
+    private DBManager() {
 
     }
 
-    public static DBManager getInstance(){
-        if(dbManager == null){
-            synchronized (DBManager.class){
-                if(dbManager==null){
+    public static DBManager getInstance() {
+        if (dbManager == null) {
+            synchronized (DBManager.class) {
+                if (dbManager == null) {
                     dbManager = new DBManager();
                 }
             }
@@ -48,16 +49,15 @@ public class DBManager {
         return dbManager;
     }
 
-    public void copyCitysToDB(){//将所有城市保存到数据库
+    public void copyCitysToDB() {//将所有城市保存到数据库
 
-        boolean cityInited = PreferencesUtil.get(CITY_INITED,false);
+        boolean cityInited = PreferencesUtil.get(CITY_INITED, false);
 
-        if(!cityInited){
-            File file = new File(DB_PATH,DB_NAME);
-            if(file.exists()){//未初始化却存在
+        if (!cityInited) {
+            File file = new File(DB_PATH, DB_NAME);
+            if (file.exists()) {//未初始化却存在
                 file.delete();
             }
-
 
 
             String allcities = FileUtil.assertFile2String("ChinaCityList.json", MyApplication.getContext());
@@ -80,14 +80,14 @@ public class DBManager {
             DataSupport.saveAllAsync(cityDaoList).listen(new SaveCallback() {
                 @Override
                 public void onFinish(boolean success) {
-                    if(success){
-                        LogUtil.d("SaveCityDao", "onFinish: "+"Success");
+                    if (success) {
+                        LogUtil.d("SaveCityDao", "onFinish: " + "Success");
                         PreferencesUtil.put(CITY_INITED, true);
 
-                    }else {
-                        LogUtil.d("SaveCityDao","Failed");
-                        Toast.makeText(MyApplication.getContext(),"城市数据初始化失败,跳转至默认城市,\n重启可重新初始化",Toast.LENGTH_LONG).show();
-                        WeatherActivity.actionStart(MyApplication.getContext(),"CN101280101");
+                    } else {
+                        LogUtil.d("SaveCityDao", "Failed");
+                        Toast.makeText(MyApplication.getContext(), "城市数据初始化失败,跳转至默认城市,\n重启可重新初始化", Toast.LENGTH_LONG).show();
+                        WeatherActivity.actionStart(MyApplication.getContext(), "CN101280101");
 
                     }
                 }
@@ -96,29 +96,26 @@ public class DBManager {
         }
 
 
-
     }
 
-    private List<CityDao> getCities(final String keyword){
+    private List<CityDao> getCities(final String keyword) {
         List<CityDao> cityDaoList;
         //long timeMills = System.currentTimeMillis();
-        if(keyword == null){
+        if (keyword == null) {
             cityDaoList = DataSupport.findAll(CityDao.class);
-        }else {
-            cityDaoList = DataSupport.where("cityName like ? or pinyin like ?", "%"+keyword+"%", "%"+keyword+"%").order("pinyin").find(CityDao.class);
+        } else {
+            cityDaoList = DataSupport.where("cityName like ? or pinyin like ?", "%" + keyword + "%", "%" + keyword + "%").order("pinyin").find(CityDao.class);
         }
-       // LogUtil.d(TAG, "getCities: "+(System.currentTimeMillis()-timeMills)+"ms");
+        // LogUtil.d(TAG, "getCities: "+(System.currentTimeMillis()-timeMills)+"ms");
 
 
-
-
-        if(keyword == null){
+        if (keyword == null) {
             String lastInital = "";
             String currentInital;
-            for(CityDao city : cityDaoList){
-                currentInital = city.getPinyin().substring(0,1);
-                if(!currentInital.equals(lastInital)){
-                    LogUtil.d("getCities:", "last:"+lastInital+" current:"+currentInital);
+            for (CityDao city : cityDaoList) {
+                currentInital = city.getPinyin().substring(0, 1);
+                if (!currentInital.equals(lastInital)) {
+                    LogUtil.d("getCities:", "last:" + lastInital + " current:" + currentInital);
                     lastInital = currentInital;
                     city.setmInitial(currentInital.toUpperCase());
                 }
@@ -127,31 +124,31 @@ public class DBManager {
         return cityDaoList;
     }
 
-    public CityDao findCity(String city){
+    public CityDao findCity(String city) {
         List<CityDao> cityId = DataSupport.where("cityname = ?", city).limit(1).find(CityDao.class);
-        if(cityId.size()!=0){
+        if (cityId.size() != 0) {
             return cityId.get(0);
-        }else {
+        } else {
             return null;
         }
     }
 
-    public List<CityDao> getAllCities(){
+    public List<CityDao> getAllCities() {
         return getCities(null);
     }
 
-    public List<CityDao> getSearchCities(String keyword){
+    public List<CityDao> getSearchCities(String keyword) {
         return getCities(keyword);
     }
 
 
-    public List<FollowedCityWeather> getCitiesWeather(){
+    public List<FollowedCityWeather> getCitiesWeather() {
 
         return DataSupport.findAll(FollowedCityWeather.class);
     }
 
 
-    public void saveOrUpdateCityWeather(Weather weather){
+    public void saveOrUpdateCityWeather(Weather weather) {
         FollowedCityWeather cityWeather = new FollowedCityWeather();
         cityWeather.setCityName(weather.basic.city);
         cityWeather.setCondition(weather.now.now_cond.cond_text);
@@ -159,27 +156,28 @@ public class DBManager {
         cityWeather.setMinTmp(weather.forecastList.get(0).daily_tmp.min_tmp);
         cityWeather.setCondition_code(weather.now.now_cond.code);
         cityWeather.setCityId(weather.basic.id);
-        cityWeather.saveOrUpdate("cityName = ?",cityWeather.getCityName());//保存或者更新
+        cityWeather.saveOrUpdate("cityName = ?", cityWeather.getCityName());//保存或者更新
     }
 
-    public void deleteFollowedCity(String cityName){
-        DataSupport.deleteAll(FollowedCityWeather.class,"cityName = ?",cityName);
+    public void deleteFollowedCity(String cityName) {
+        DataSupport.deleteAll(FollowedCityWeather.class, "cityName = ?", cityName);
     }
-    public List<FollowedCityWeather> findAllFollowedCities(){
+
+    public List<FollowedCityWeather> findAllFollowedCities() {
         return DataSupport.findAll(FollowedCityWeather.class);
     }
 
     /**
      * a-z 排序,比较器
      */
-    private class CountyComparator implements Comparator<County>{
+    private class CountyComparator implements Comparator<County> {
 
         @Override
         public int compare(County c1, County c2) {
             int l1 = c1.countyPY.length();
             int l2 = c2.countyPY.length();
-            int shortLength = l1>l2 ? l2:l1;
-            return c1.countyPY.substring(0,shortLength).compareTo(c2.countyPY.substring(0,shortLength));
+            int shortLength = l1 > l2 ? l2 : l1;
+            return c1.countyPY.substring(0, shortLength).compareTo(c2.countyPY.substring(0, shortLength));
         }
     }
 }

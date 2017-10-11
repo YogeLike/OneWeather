@@ -93,7 +93,7 @@ public class SunriseSunset extends View {
         mArcPaint.setColor(lineColor);
         mArcPaint.setStyle(Paint.Style.STROKE);
         mArcPaint.setStrokeWidth(3);
-        mArcPaint.setPathEffect(new DashPathEffect(new float[]{20,18},20));
+        mArcPaint.setPathEffect(new DashPathEffect(new float[]{20,15},20));
         mArcPaint.setStrokeCap(Paint.Cap.ROUND);
         mRectF = new RectF();
 
@@ -103,7 +103,7 @@ public class SunriseSunset extends View {
         mSunPaint.setColor(sunColor);
         mSunPaint.setStyle(Paint.Style.STROKE);
         mSunPaint.setStrokeWidth(3);
-        mSunPaint.setPathEffect(new DashPathEffect(new float[]{20,18},20));
+        mSunPaint.setPathEffect(new DashPathEffect(new float[]{20,15},20));
         mSunriseBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_sunrise);
         mSunsetBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_sunset);
         mSunPaint.setColorFilter( new PorterDuffColorFilter(sunColor, PorterDuff.Mode.SRC_ATOP)) ;//设置后bitmap才会填充颜色
@@ -171,9 +171,9 @@ public class SunriseSunset extends View {
 
             canvas.drawBitmap(mSunriseBitmap,(float)(mCenterPoint.x - mRadius* cos((nowAngle+18)*(PI/180) + halfRemianAngle )) - mSunriseBitmap.getWidth()/2,(float)(mCenterPoint.y - mRadius* sin((nowAngle+18)*(PI/180)+(halfRemianAngle))) - mSunriseBitmap.getHeight()/2 ,mSunPaint);//18这个数字是我测试出来计算过程中损失的各种度数
         }
-        canvas.drawArc(mRectF,STARTANGLE + nowAngle+1f,sweepAngle - nowAngle,false,mArcPaint);//弧
+        canvas.drawArc(mRectF,STARTANGLE + nowAngle,sweepAngle - nowAngle,false,mArcPaint);//弧
         canvas.drawLine(0,lineYLocate,width,lineYLocate,mArcPaint);//线
-        canvas.drawArc(mRectF,STARTANGLE,nowAngle-3f,false,mSunPaint);//留出3度让小太阳背景空白
+        canvas.drawArc(mRectF,STARTANGLE,nowAngle-3.5f,false,mSunPaint);//留出3度让小太阳背景空白
 
 
 
@@ -194,6 +194,7 @@ public class SunriseSunset extends View {
                 mAnimator.setDuration((long) (2000+3000*nowPercent));
                 mAnimator.setInterpolator(new LinearInterpolator());
                 mAnimator.start();
+
             }
 
         }
