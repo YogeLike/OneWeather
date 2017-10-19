@@ -25,7 +25,7 @@
             android:layout_marginLeft="@dimen/common_dimen_huge"
             android:layout_marginRight="@dimen/common_dimen_big">
 
-            <com.yoga.oneweather.customview.Windmill
+            <com.yoga.oneweather.widget.Windmill
                 android:id="@+id/windmill_big"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
@@ -33,7 +33,7 @@
                 app:windLengthPerent="0.36"
                 app:windmillColors="@color/blue" />
 
-            <com.yoga.oneweather.customview.Windmill
+            <com.yoga.oneweather.widget.Windmill
                 android:id="@+id/windmill_small"
                 android:layout_width="90dp"
                 android:layout_height="90dp"

@@ -28,6 +28,7 @@ public class MyApplication extends Application {
         DBManager.getInstance().copyCitysToDB();
 
 
+
     }
 
     public static Gson getGson() {

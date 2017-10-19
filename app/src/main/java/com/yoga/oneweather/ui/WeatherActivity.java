@@ -1,16 +1,12 @@
 package com.yoga.oneweather.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.Allocation;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,10 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.yoga.oneweather.R;
-import com.yoga.oneweather.customview.CircleProgress;
-import com.yoga.oneweather.customview.SunriseSunset;
-import com.yoga.oneweather.customview.Windmill;
 import com.yoga.oneweather.model.db.DBManager;
 import com.yoga.oneweather.model.entity.weather.AQI;
 import com.yoga.oneweather.model.entity.weather.Forecast;
@@ -41,6 +35,10 @@ import com.yoga.oneweather.util.JSONHandleUtil;
 import com.yoga.oneweather.util.LogUtil;
 import com.yoga.oneweather.util.PreferencesUtil;
 import com.yoga.oneweather.util.VisibilityCheckUtil;
+import com.yoga.oneweather.widget.BlurTransformation;
+import com.yoga.oneweather.widget.CircleProgress;
+import com.yoga.oneweather.widget.SunriseSunset;
+import com.yoga.oneweather.widget.Windmill;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -61,8 +59,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     private Weather mWeather;
     private ImageView bg_image;
-    private static final float BITMAP_SCALE = 0.3f;
-    private static final float BLUR_RADIUS = 4.0f;
+    private String refreshCityId;
 
     private final int[][] code_array = {
             {100},{101,102,103},{104},{200,201,202,203,204,205,206,207,208},
@@ -110,6 +107,9 @@ public class WeatherActivity extends AppCompatActivity {
         Intent intent = new Intent(context,WeatherActivity.class);
         intent.putExtra("CityId",cityId);
         context.startActivity(intent);
+        if(context instanceof Activity){
+            ((Activity)context).finish();
+        }
     }
 
     @Override
@@ -160,15 +160,13 @@ public class WeatherActivity extends AppCompatActivity {
         choose_city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WeatherActivity.this,FollowedActivity.class);
-                startActivity(intent);
+                FollowedActivity.actionStart(WeatherActivity.this);
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WeatherActivity.this,SettingActivity.class);
-                startActivity(intent);
+                SettingActivity.actionStart(WeatherActivity.this);
             }
         });
 
@@ -215,21 +213,19 @@ public class WeatherActivity extends AppCompatActivity {
 
         }else {//不由intent启动
             if(weatherString == null){//没缓存(第一次启动)
-                Intent intent = new Intent(this,SearchActivity.class);
-                startActivity(intent);
-                finish();
-            }else {//有缓存
+                SearchActivity.actionStart(this);
+            }else {//有缓存,启动App时
                 mWeather = JSONHandleUtil.handleWeatherResponse(weatherString);
                 showWeatherInfo(mWeather);
                 cityId = mWeather.basic.id;
             }
         }
 
-        final String finalCityId = cityId;
+        refreshCityId = cityId;
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                requestWeather(finalCityId);
+                requestWeather(refreshCityId);
             }
         });
 
@@ -240,6 +236,19 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        refreshCityId = getIntent().getStringExtra("CityId");
+        //String weatherString = PreferencesUtil.get("weather",null);
+        if(refreshCityId != null){
+            swipeRefresh.setRefreshing(true);
+            requestWeather(refreshCityId);
+
+        }
+
+    }
 
     private void requestWeather(String cityId) {
         //https://free-api.heweather.com/v5/weather?city= &key=1c8bebce635648809e98babb820856c9
@@ -299,15 +308,16 @@ public class WeatherActivity extends AppCompatActivity {
         String uv_index = "";
         String sunriseTime = "";
         String sunsetTime = "";
-        String nowTodayTemp = "";
+        String nowTodayTemp;
 
         int now_cond_code = Integer.parseInt(weather.now.now_cond.code);
         int imageId = getBgImageId(now_cond_code);//获得背景id
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),imageId);
 
-        bitmap = blur(bitmap);//高斯模糊
-        bg_image.setImageBitmap(bitmap);
 
+        Glide.with(this)
+                .load(imageId)
+                .apply(new RequestOptions().transform(new BlurTransformation(this,9,2)))
+                .into(bg_image);
 
 
 
@@ -412,21 +422,6 @@ public class WeatherActivity extends AppCompatActivity {
         return image_id[0];
     }
 
-    private Bitmap blur(Bitmap bitmap) {//对背景图进行高斯模糊
-
-        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*BITMAP_SCALE), (int) (bitmap.getHeight()*BITMAP_SCALE),true);
-
-        RenderScript rs = RenderScript.create(this);
-        Allocation allocation = Allocation.createFromBitmap(rs,bitmap);
-        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs,allocation.getElement());
-        blur.setInput(allocation);
-        blur.setRadius(BLUR_RADIUS);
-        blur.forEach(allocation);
-        allocation.copyTo(bitmap);
-
-        rs.destroy();
-        return bitmap;
-    }
 
     //改变图片的亮度方法 0--原样 >0---调亮 <0---调暗
     private void changeLight(ImageView imageView, int brightness) {

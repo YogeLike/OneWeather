@@ -1,6 +1,8 @@
 package com.yoga.oneweather.ui;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -30,10 +32,10 @@ import com.yoga.oneweather.R;
 import com.yoga.oneweather.city.OnCityClickListener;
 import com.yoga.oneweather.city.ResultAdapter;
 import com.yoga.oneweather.city.SearchViewAdapter;
-import com.yoga.oneweather.customview.SideLetterBar;
 import com.yoga.oneweather.model.db.CityDao;
 import com.yoga.oneweather.model.db.DBManager;
 import com.yoga.oneweather.util.LogUtil;
+import com.yoga.oneweather.widget.SideLetterBar;
 
 import java.util.List;
 
@@ -58,6 +60,11 @@ public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = "SearchActivity";
 
+    public static void actionStart(Context context){
+        Intent intent = new Intent(context,SearchActivity.class);
+        context.startActivity(intent);
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +162,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onCityClick(String cityId) {
                 WeatherActivity.actionStart(SearchActivity.this, cityId);
-                finish();
             }
         };
 

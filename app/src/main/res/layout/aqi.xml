@@ -37,7 +37,7 @@
                 android:textSize="@dimen/text_size_default"
                 android:textColor="@color/white"/>
 
-            <com.yoga.oneweather.customview.CircleProgress
+            <com.yoga.oneweather.widget.CircleProgress
                 android:id="@+id/aqi_circle"
                 android:layout_width="145dp"
                 android:layout_height="wrap_content"

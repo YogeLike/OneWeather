@@ -14,7 +14,7 @@
         android:text="天文"
         android:textSize="@dimen/text_size_medium"
         android:textColor="@color/white"/>
-    <com.yoga.oneweather.customview.SunriseSunset
+    <com.yoga.oneweather.widget.SunriseSunset
         android:id="@+id/sunmove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,5 +1,7 @@
 package com.yoga.oneweather.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +20,12 @@ import com.yoga.oneweather.R;
 
 public class SettingActivity extends AppCompatActivity{
     private PreferenceFragment pf;
+
+    public static void actionStart(Context context){
+        Intent intent = new Intent(context,SettingActivity.class);
+        context.startActivity(intent);
+
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +50,7 @@ public class SettingActivity extends AppCompatActivity{
 
 
     }
+
 
 
     @Override

@@ -40,7 +40,8 @@
         <activity
             android:name=".ui.WeatherActivity"
             android:theme="@style/WeatherTheme"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

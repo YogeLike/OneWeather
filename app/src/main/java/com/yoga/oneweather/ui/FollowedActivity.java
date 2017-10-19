@@ -1,5 +1,6 @@
 package com.yoga.oneweather.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -30,6 +31,12 @@ public class FollowedActivity extends AppCompatActivity {
     private ImageButton edit_button;
     private ImageButton add_button;
 
+
+    public static void actionStart(Context context){
+        Intent intent = new Intent(context,FollowedActivity.class);
+        context.startActivity(intent);
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +101,7 @@ public class FollowedActivity extends AppCompatActivity {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FollowedActivity.this,SearchActivity.class);
-                startActivity(intent);
+                SearchActivity.actionStart(FollowedActivity.this);
             }
         });
 
