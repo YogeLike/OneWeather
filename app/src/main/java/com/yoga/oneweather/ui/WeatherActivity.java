@@ -67,10 +67,16 @@ public class WeatherActivity extends AppCompatActivity {
             {400,401,402,403,404,405,406,407},{500,501,502},{503,504,507,508}
     };
 
+    /*
     private final int[] image_id = {
             R.drawable.sunny,R.drawable.clouds,R.drawable.overcast,
             R.drawable.wind,R.drawable.storm,R.drawable.rain,R.drawable.rain2,
             R.drawable.snow,R.drawable.foggy,R.drawable.sand
+    };
+    */
+
+    private final String[] image_type = {
+            "sunny","clouds","overcast","wind","storm","rain","rain2","snow","foggy","sand"
     };
 
     private SwipeRefreshLayout swipeRefresh;
@@ -229,20 +235,16 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
     }
 
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        String oldCityId = getIntent().getStringExtra("CityId");
         setIntent(intent);
         refreshCityId = getIntent().getStringExtra("CityId");
-        //String weatherString = PreferencesUtil.get("weather",null);
-        if(refreshCityId != null){
+        if((refreshCityId != null) && (!refreshCityId.equals(oldCityId))){
             swipeRefresh.setRefreshing(true);
             requestWeather(refreshCityId);
 
@@ -311,12 +313,17 @@ public class WeatherActivity extends AppCompatActivity {
         String nowTodayTemp;
 
         int now_cond_code = Integer.parseInt(weather.now.now_cond.code);
-        int imageId = getBgImageId(now_cond_code);//获得背景id
+        String baseUrl = "http://oy5qvvdsx.bkt.clouddn.com/oneweather/image/jpg/";
+        String imageType = getBgImageType(now_cond_code);//获得背景id
 
-
+        String imageUrl = baseUrl+ imageType+".jpg";
         Glide.with(this)
-                .load(imageId)
-                .apply(new RequestOptions().transform(new BlurTransformation(this,9,2)))
+                .load(imageUrl)
+                .apply(new RequestOptions()
+                        .transform(new BlurTransformation(this,9,2))
+                        .error(R.drawable.clouds)
+                )
+                .thumbnail(0.3f)
                 .into(bg_image);
 
 
@@ -409,17 +416,17 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
-    private int getBgImageId(int now_cond_code) {//获得背景图片id
+    private String getBgImageType(int now_cond_code) {//获得背景图片类型
         for(int i = 0 ; i<code_array.length;i++){
             if(code_array[i].length>0){
                 for(int j = 0 ; j<code_array[i].length;j++){
                     if(code_array[i][j]==now_cond_code){
-                        return image_id[i];
+                        return image_type[i];
                     }
                 }
             }
         }
-        return image_id[0];
+        return image_type[0];
     }
 
 

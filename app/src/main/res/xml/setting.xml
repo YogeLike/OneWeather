@@ -27,7 +27,7 @@
 
         <Preference
             android:selectable="false"
-            android:summary="1.1"
+            android:summary="2.0"
             android:title="版本号" />
 
 
