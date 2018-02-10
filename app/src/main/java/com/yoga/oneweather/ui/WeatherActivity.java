@@ -176,6 +176,7 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
+
         scrollView. getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 
             boolean[] flags = {false,false,false,false,false};
@@ -313,10 +314,9 @@ public class WeatherActivity extends AppCompatActivity {
         String nowTodayTemp;
 
         int now_cond_code = Integer.parseInt(weather.now.now_cond.code);
-        String baseUrl = "http://oy5qvvdsx.bkt.clouddn.com/oneweather/image/jpg/";
         String imageType = getBgImageType(now_cond_code);//获得背景id
 
-        String imageUrl = baseUrl+ imageType+".jpg";
+        String imageUrl = Constant.BACKGROUD_IAMGE + imageType+".jpg";
         Glide.with(this)
                 .load(imageUrl)
                 .apply(new RequestOptions()
@@ -359,7 +359,7 @@ public class WeatherActivity extends AppCompatActivity {
             date.setText(s[1]+"月"+s[2]+"日");
             con_text.setText(forecast.daily_cond.txt_d);
             daily_tmp.setText(dailyTemp);
-            Glide.with(this).load(Constant.WEATHER_ICON_URL + forecast.daily_cond.code_d +".png").into(con_img);
+            Glide.with(this).load(Constant.CONDITION_ICON + forecast.daily_cond.code_d +".png").into(con_img);
             forcastLayout.addView(view);
         }
 

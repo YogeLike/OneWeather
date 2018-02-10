@@ -75,7 +75,7 @@ public class FollowedCityAdapter extends RecyclerView.Adapter {
         FollowedCityWeather cityWeather = cityWeathers.get(position);
         ((FollowedCityHolder)holder).cityName.setText(cityWeather.getCityName());
         ((FollowedCityHolder)holder).cityTmp.setText(cityWeather.getMinTmp()+"° /"+cityWeather.getMaxTmp()+"°");
-        Glide.with(MyApplication.getContext()).load(Constant.WEATHER_ICON_URL + cityWeather.getCondition_code() +".png").into(((FollowedCityHolder) holder).weatherImage);
+        Glide.with(MyApplication.getContext()).load(Constant.CONDITION_ICON + cityWeather.getCondition_code() +".png").into(((FollowedCityHolder) holder).weatherImage);
 
         ((FollowedCityHolder)holder).unfollowButton.setVisibility(isDeleteing ? View.VISIBLE : View.GONE);
         ((FollowedCityHolder)holder).cityTmp.setVisibility(isDeleteing ? View.GONE : View.VISIBLE);

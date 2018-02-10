@@ -25,9 +25,11 @@ public class Constant {
     public static final int DEFAULT_ARC_WIDTH = 15;
 
 
-
     public static final String WEATHER_URL = "https://free-api.heweather.com/v5/";
     public static final String LOCATE_KEY = "dc60aaa882c6854f93ac7e3d55516f58";
     public static final String WEATHER_KEY = "1c8bebce635648809e98babb820856c9";
-    public static final String WEATHER_ICON_URL = "https://cdn.heweather.com/cond_icon/";
+    public static final String BASE_URL = "http://oy5qvvdsx.bkt.clouddn.com/oneweather/";
+    public static final String CONDITION_ICON = BASE_URL + "condition_icon/";
+    public static final String BACKGROUD_IAMGE = BASE_URL + "image/jpg/";
+    
 }

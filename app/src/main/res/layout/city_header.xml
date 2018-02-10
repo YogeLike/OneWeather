@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingBottom="10dp"
     tools:ignore="RtlHardcoded">
+
     <TextView
         style="@style/LetterIndexTextViewStyle"
-        android:text="@string/located_city"/>
+        android:text="@string/located_city" />
 
     <LinearLayout
         android:id="@+id/location_layout"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:gravity="center"
         android:layout_marginLeft="@dimen/common_dimen_big"
-        android:background="@color/dark_background">
+        android:background="@color/dark_background"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
         <ImageView
             style="@style/CommonIconImageSmall"
@@ -35,18 +37,19 @@
 
 
     </LinearLayout>
+
     <TextView
         style="@style/LetterIndexTextViewStyle"
         android:layout_marginTop="6dp"
-        android:text="@string/hot_city"/>
+        android:text="@string/hot_city" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/header_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="36dp"
         android:paddingBottom="10dp"
-        />
+        android:paddingLeft="10dp"
+        android:paddingRight="36dp" />
 
 
 </LinearLayout>
